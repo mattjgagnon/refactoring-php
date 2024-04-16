@@ -8,10 +8,10 @@ use DateTimeZone;
 final readonly class MemcachedAPI
 {
     public function __construct(
-        private readonly array $argv,
-        private readonly int $argc,
-        private readonly array $get,
-        private readonly array $session,
+        private array $argv,
+        private int   $argc,
+        private array $get,
+        private array $session,
     ) {
     }
 
