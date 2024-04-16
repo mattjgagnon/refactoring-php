@@ -2,7 +2,7 @@
 
 namespace mattjgagnon;
 
-class MemcachedData
+final class MemcachedData
 {
     public static $data = null;
 }
