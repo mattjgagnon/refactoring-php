@@ -4,6 +4,7 @@ namespace mattjgagnon\RefactoringPhp\refactors;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 
 final readonly class MemcachedAPI
 {
@@ -15,6 +16,9 @@ final readonly class MemcachedAPI
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function memcached_api(): void
     {
         $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
@@ -123,7 +127,7 @@ final readonly class MemcachedAPI
         }
     }
 
-    private function run_memcached_benchmark($value = 1)
+    private function run_memcached_benchmark($value = 1): void
     {
         $memcached_data = new MemcachedData();
         $iteration = $value ?? 1;
@@ -131,13 +135,8 @@ final readonly class MemcachedAPI
         $time_start_static = microtime(true);
 
         for ($i = 0; $i < $iteration; $i++) {
-            if ($memcached_data->data != null) {
-                $cached_data = $memcached_data->data;
-            } else {
-                //$time_start_memcached = microtime(true);
+            if ($memcached_data->data == null) {
                 $memcached_data->data = Memcached::get_all_debug_items_memcache();
-                //$time_end_memcached = microtime(true);
-                //$result['memcached'] = round(($time_end_memcached - $time_start_memcached) * 1000);
             }
         }
 
@@ -145,15 +144,10 @@ final readonly class MemcachedAPI
 
         $result['static'] = round(($time_end_static - $time_start_static) * 1000);
 
-        //    session_start();
-        //    session_destroy();
         $start_session_time = microtime(true);
-        //session_start();
 
         for ($i = 0; $i < $iteration; $i++) {
-            if (isset($this->session['lg_debug_items'])) {
-                $cached_data = $this->session['lg_debug_items'];
-            } else {
+            if (!isset($this->session['lg_debug_items'])) {
                 $cached_data = Memcached::get_all_debug_items_memcache();
                 $_SESSION['lg_debug_items'] = $cached_data;
             }
@@ -166,9 +160,7 @@ final readonly class MemcachedAPI
         $time_globals_start = microtime(true);
 
         for ($i = 0; $i < $iteration; $i++) {
-            if (isset($GLOBALS["lg_debug_items"])) {
-                $cached_data = $GLOBALS["lg_debug_items"];
-            } else {
+            if (!isset($GLOBALS["lg_debug_items"])) {
                 $cached_data = Memcached::get_all_debug_items_memcache();
                 $GLOBALS["lg_debug_items"] = $cached_data;
             }
