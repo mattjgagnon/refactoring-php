@@ -6,7 +6,9 @@ header('Content-Type: application/json');
 require_once __DIR__."/../site_init.php";
 
 // assume this will have to be stubbed
+use mattjgagnon\MemcachedAPI;
 use SomeCompany\Memcached;
+
 $mc = Memcached::init();
 
 $query = null;
@@ -103,7 +105,7 @@ switch ($query) {
         break;
 
     case 'benchmark':
-        run_memcached_benchmark($value);
+        MemcachedAPI::run_memcached_benchmark($value);
         break;
 
     default:
