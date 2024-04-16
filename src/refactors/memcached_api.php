@@ -117,11 +117,11 @@ function run_memcached_benchmark($value = 1) {
     $time_start_static = microtime(true);
 
     for ($i = 0; $i < $iteration; $i++) {
-        if (MemcachedData::$data != null) {
-            $cached_data = MemcachedData::$data;
+        if (mattjgagnon\MemcachedData::$data != null) {
+            $cached_data = mattjgagnon\MemcachedData::$data;
         } else {
             //$time_start_memcached = microtime(true);
-            MemcachedData::$data = Memcached::get_all_debug_items_memcache();
+            mattjgagnon\MemcachedData::$data = Memcached::get_all_debug_items_memcache();
             //$time_end_memcached = microtime(true);
             //$result['memcached'] = round(($time_end_memcached - $time_start_memcached) * 1000);
         }
@@ -165,12 +165,5 @@ function run_memcached_benchmark($value = 1) {
     $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
 
     echo json_encode($result);
-}
-
-
-
-class MemcachedData
-{
-    public static $data = null;
 }
 
