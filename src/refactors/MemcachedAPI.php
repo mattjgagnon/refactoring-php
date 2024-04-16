@@ -13,6 +13,7 @@ final readonly class MemcachedAPI
 
     public function memcached_api(): void
     {
+        $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
         $mc = Memcached::init();
 
         $query = null;
