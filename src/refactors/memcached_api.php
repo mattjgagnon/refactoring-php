@@ -2,9 +2,9 @@
 
 header('Content-Type: application/json');
 
-use mattjgagnon\MemcachedAPI;
+use mattjgagnon\RefactoringPhp\refactors\MemcachedAPI;
 
 $arguments = $argv;
 $arguments_count = $argc;
-MemcachedAPI::memcached_api($arguments, $arguments_count);
-
+$memcached = new MemcachedAPI($arguments, $arguments_count);
+$memcached->memcached_api();

@@ -1,16 +1,18 @@
 <?php
 
-namespace mattjgagnon;
+namespace mattjgagnon\RefactoringPhp\refactors;
 
 use DateTime;
 use DateTimeZone;
-use mattjgagnon;
 use SomeCompany\Memcached;
 
-final class MemcachedAPI
+final readonly class MemcachedAPI
 {
+    public function __construct(private readonly array $argv, private readonly int $argc)
+    {
+    }
 
-    public static function memcached_api($argv, $argc): void
+    public function memcached_api(): void
     {
         $mc = Memcached::init();
 
@@ -19,8 +21,8 @@ final class MemcachedAPI
 
         $isCLI = (php_sapi_name() == 'cli');
 
-        if ($isCLI && $argc > 1) {
-            $input_array = explode('=', $argv[1]);
+        if ($isCLI && $this->argc > 1) {
+            $input_array = explode('=', $this->argv[1]);
             if (count($input_array) > 0) $query = $input_array[0];
             if (count($input_array) > 1) $value = $input_array[1];
         } else {
@@ -117,18 +119,19 @@ final class MemcachedAPI
         }
     }
 
-    public static function run_memcached_benchmark($value = 1)
+    private static function run_memcached_benchmark($value = 1)
     {
+        $memcached_data = new MemcachedData();
         $iteration = $value ?? 1;
         $result = ['iteration' => $iteration];
         $time_start_static = microtime(true);
 
         for ($i = 0; $i < $iteration; $i++) {
-            if (mattjgagnon\MemcachedData::$data != null) {
-                $cached_data = mattjgagnon\MemcachedData::$data;
+            if ($memcached_data->data != null) {
+                $cached_data = $memcached_data->data;
             } else {
                 //$time_start_memcached = microtime(true);
-                mattjgagnon\MemcachedData::$data = Memcached::get_all_debug_items_memcache();
+                $memcached_data->data = Memcached::get_all_debug_items_memcache();
                 //$time_end_memcached = microtime(true);
                 //$result['memcached'] = round(($time_end_memcached - $time_start_memcached) * 1000);
             }
