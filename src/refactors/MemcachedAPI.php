@@ -7,8 +7,12 @@ use DateTimeZone;
 
 final readonly class MemcachedAPI
 {
-    public function __construct(private readonly array $argv, private readonly int $argc)
-    {
+    public function __construct(
+        private readonly array $argv,
+        private readonly int $argc,
+        private readonly array $get,
+        private readonly array $session,
+    ) {
     }
 
     public function memcached_api(): void
@@ -26,35 +30,35 @@ final readonly class MemcachedAPI
             if (count($input_array) > 0) $query = $input_array[0];
             if (count($input_array) > 1) $value = $input_array[1];
         } else {
-            if (isset($_GET['stats'])) {
+            if (isset($this->get['stats'])) {
                 // return memcached stats
                 $query = 'stats';
-                $value = $_GET['stats'];
-            } elseif (isset($_GET['set_all'])) {
+                $value = $this->get['stats'];
+            } elseif (isset($this->get['set_all'])) {
                 // sets all debug item keys
                 $query = 'set_all';
 
-            } elseif (isset($_GET['set'])) {
+            } elseif (isset($this->get['set'])) {
                 $query = 'set';
-                $value = $_GET['set'];
+                $value = $this->get['set'];
 
-            } elseif (isset($_GET['get'])) {
+            } elseif (isset($this->get['get'])) {
                 $query = 'get';
-                $value = $_GET['get'];
+                $value = $this->get['get'];
 
-            } elseif (isset($_GET['get_all'])) {
+            } elseif (isset($this->get['get_all'])) {
                 $query = 'get_all';
 
-            } elseif (isset($_GET['get_keys'])) {
+            } elseif (isset($this->get['get_keys'])) {
                 $query = 'get_keys';
 
-            } elseif (isset($_GET['db'])) {
+            } elseif (isset($this->get['db'])) {
                 $query = 'db';
 
-            } elseif (isset($_GET['flush'])) {
+            } elseif (isset($this->get['flush'])) {
                 $query = 'flush';
 
-            } elseif (isset($_GET['benchmark'])) {
+            } elseif (isset($this->get['benchmark'])) {
                 $query = 'benchmark';
             }
         }
@@ -99,7 +103,7 @@ final readonly class MemcachedAPI
                 break;
 
             case 'db':
-                $db = Memcached::get_tbl_debug_items($_GET['db']);
+                $db = Memcached::get_tbl_debug_items($this->get['db']);
                 echo json_encode(array_merge($query_value_array, array('tbl_debug_items' => $db)), JSON_PRETTY_PRINT);
                 break;
 
@@ -147,8 +151,8 @@ final readonly class MemcachedAPI
         //session_start();
 
         for ($i = 0; $i < $iteration; $i++) {
-            if (isset($_SESSION['lg_debug_items'])) {
-                $cached_data = $_SESSION['lg_debug_items'];
+            if (isset($this->session['lg_debug_items'])) {
+                $cached_data = $this->session['lg_debug_items'];
             } else {
                 $cached_data = Memcached::get_all_debug_items_memcache();
                 $_SESSION['lg_debug_items'] = $cached_data;
