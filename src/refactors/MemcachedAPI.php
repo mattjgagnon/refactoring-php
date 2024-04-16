@@ -4,7 +4,6 @@ namespace mattjgagnon\RefactoringPhp\refactors;
 
 use DateTime;
 use DateTimeZone;
-use SomeCompany\Memcached;
 
 final readonly class MemcachedAPI
 {
@@ -110,7 +109,7 @@ final readonly class MemcachedAPI
                 break;
 
             case 'benchmark':
-                self::run_memcached_benchmark($value);
+                $this->run_memcached_benchmark($value);
                 break;
 
             default:
@@ -119,7 +118,7 @@ final readonly class MemcachedAPI
         }
     }
 
-    private static function run_memcached_benchmark($value = 1)
+    private function run_memcached_benchmark($value = 1)
     {
         $memcached_data = new MemcachedData();
         $iteration = $value ?? 1;
