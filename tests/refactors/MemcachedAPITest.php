@@ -12,7 +12,7 @@ final class MemcachedAPITest extends TestCase
     {
         // assemble
         $argv = [];
-        $argc = 0;
+        $argc = 2;
         $get = [];
         $session = [];
 
