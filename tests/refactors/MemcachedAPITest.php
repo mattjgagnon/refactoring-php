@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class MemcachedAPITest extends TestCase
 {
-    #[Test] public function it_calls_memcached_api()
+    #[Test] public function it_calls_memcached_api_and_responds_with_default_message()
     {
         // assemble
         $argv = [];
@@ -18,9 +18,12 @@ final class MemcachedAPITest extends TestCase
 
         // act
         $memcached = new MemcachedAPI($argv, $argc, $get, $session);
-        $memcached->memcached_api();
+        $results = $memcached->memcached_api();
 
         // assert
-        $this->assertInstanceOf(MemcachedAPI::class, $memcached);
+        $this->assertIsString($results);
+        $this->assertSame('{
+    "message": "tbd -list all commands here"
+}', $results);
     }
 }
