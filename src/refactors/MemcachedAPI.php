@@ -19,7 +19,7 @@ final readonly class MemcachedAPI
     /**
      * @throws Exception
      */
-    public function memcached_api(): void
+    public function memcached_api(): false|string
     {
         $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
         $mc = Memcached::init();
@@ -72,7 +72,7 @@ final readonly class MemcachedAPI
         switch ($query) {
             case 'stats':
 
-                echo json_encode(array_merge($query_value_array, array('stats' => $mc->getStats())), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, array('stats' => $mc->getStats())), JSON_PRETTY_PRINT);
                 break;
 
             case 'set_all':
@@ -80,7 +80,7 @@ final readonly class MemcachedAPI
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_all_debug_items_memcache();
                 $result = array_merge($query_value_array, array("status" => $isLoaded, "datetime" => $datetime));
-                echo json_encode($result, JSON_PRETTY_PRINT);
+                return json_encode($result, JSON_PRETTY_PRINT);
                 break;
 
             case 'set':
@@ -88,33 +88,33 @@ final readonly class MemcachedAPI
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_debug_items_memcache($value);
                 $result = array_merge($query_value_array, array('set_status' => array("status" => $isLoaded, "datetime" => $datetime)));
-                echo json_encode($result, JSON_PRETTY_PRINT);
+                return json_encode($result, JSON_PRETTY_PRINT);
                 break;
 
             case 'get':
                 $cached_data = Memcached::get_debug_items_memcache($value);
-                echo json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
                 break;
 
             case 'get_all':
                 $cached_data = Memcached::get_all_debug_items_memcache();
-                echo json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
                 break;
 
             case 'get_keys':
                 $keys = Memcached::get_all_debug_item_keys();
-                echo json_encode(array_merge($query_value_array, array('db_keys' => $keys)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, array('db_keys' => $keys)), JSON_PRETTY_PRINT);
                 break;
 
             case 'db':
                 $db = Memcached::get_tbl_debug_items($this->get['db']);
-                echo json_encode(array_merge($query_value_array, array('tbl_debug_items' => $db)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, array('tbl_debug_items' => $db)), JSON_PRETTY_PRINT);
                 break;
 
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
                 $result = array_merge($query_value_array, array("status" => $isFlushed, "datetime" => $datetime));
-                echo json_encode($result, JSON_PRETTY_PRINT);
+                return json_encode($result, JSON_PRETTY_PRINT);
                 break;
 
             case 'benchmark':
@@ -123,11 +123,13 @@ final readonly class MemcachedAPI
 
             default:
                 $result = array("message" => "tbd -list all commands here");
-                echo json_encode($result, JSON_PRETTY_PRINT);
+                return json_encode($result, JSON_PRETTY_PRINT);
         }
+
+        return '';
     }
 
-    private function run_memcached_benchmark($value = 1): void
+    private function run_memcached_benchmark($value = 1): false|string
     {
         $memcached_data = new MemcachedData();
         $iteration = $value ?? 1;
@@ -170,6 +172,6 @@ final readonly class MemcachedAPI
 
         $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
 
-        echo json_encode($result);
+        return json_encode($result);
     }
 }
