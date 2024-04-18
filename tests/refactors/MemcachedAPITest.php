@@ -106,4 +106,31 @@ final class MemcachedAPITest extends TestCase
         $this->assertArrayHasKey('status', $results_array['set_status']);
         $this->assertArrayHasKey('datetime', $results_array['set_status']);
     }
+
+    #[Test] public function it_calls_memcached_with_get_api_and_responds()
+    {
+        // assemble
+        $argv = [];
+        $argc = 0;
+        $get = [
+            'get' => '',
+        ];
+        $session = [];
+
+        // act
+        $memcached = new MemcachedAPI($argv, $argc, $get, $session);
+        $results = $memcached->memcached_api();
+
+        // assert
+        $results_array = json_decode($results, 1);
+        $this->assertArrayHasKey('command', $results_array);
+        $this->assertIsArray($results_array);
+        $this->assertIsArray($results_array['command']);
+        $this->assertArrayHasKey('query', $results_array['command']);
+        $this->assertSame('get', $results_array['command']['query']);
+        $this->assertArrayHasKey('value', $results_array['command']);
+        $this->assertArrayHasKey('hostname', $results_array['command']);
+        $this->assertArrayHasKey('memcached_data', $results_array);
+        $this->assertIsArray($results_array['memcached_data']);
+    }
 }
