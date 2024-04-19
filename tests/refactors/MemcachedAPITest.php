@@ -214,4 +214,36 @@ final class MemcachedAPITest extends TestCase
         $this->assertArrayHasKey('tbl_debug_items', $results_array);
         $this->assertIsArray($results_array['tbl_debug_items']);
     }
+
+    #[Test] public function it_calls_memcached_with_flush_and_responds()
+    {
+        // assemble
+        $argv = [];
+        $argc = 0;
+        $get = [
+            'flush' => '',
+        ];
+        $session = [];
+
+        // act
+        $memcached = new MemcachedAPI($argv, $argc, $get, $session);
+        $results = $memcached->memcached_api();
+
+        // assert
+        $results_array = json_decode($results, 1);
+        $this->assertArrayHasKey('command', $results_array);
+        $this->assertIsArray($results_array);
+        $this->assertIsArray($results_array['command']);
+        $this->assertArrayHasKey('query', $results_array['command']);
+        $this->assertSame('flush', $results_array['command']['query']);
+        $this->assertArrayHasKey('value', $results_array['command']);
+        $this->assertArrayHasKey('hostname', $results_array['command']);
+        $this->assertArrayHasKey('status', $results_array);
+        $this->assertIsArray($results_array['status']);
+        $this->assertArrayHasKey('datetime', $results_array);
+        $this->assertIsArray($results_array['datetime']);
+        $this->assertArrayHasKey('date', $results_array['datetime']);
+        $this->assertArrayHasKey('timezone_type', $results_array['datetime']);
+        $this->assertArrayHasKey('timezone', $results_array['datetime']);
+    }
 }
