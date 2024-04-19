@@ -246,4 +246,23 @@ final class MemcachedAPITest extends TestCase
         $this->assertArrayHasKey('timezone_type', $results_array['datetime']);
         $this->assertArrayHasKey('timezone', $results_array['datetime']);
     }
+
+    #[Test] public function it_calls_memcached_with_benchmark_and_responds()
+    {
+        // assemble
+        $argv = [];
+        $argc = 0;
+        $get = [
+            'benchmark' => '',
+        ];
+        $session = [];
+
+        // act
+        $memcached = new MemcachedAPI($argv, $argc, $get, $session);
+        $results = $memcached->memcached_api();
+
+        // assert
+        $results_array = json_decode($results, 1);
+        $this->assertNull($results_array);
+    }
 }
