@@ -76,9 +76,7 @@ final readonly class MemcachedAPI
 
         switch ($query) {
             case 'stats':
-
                 return json_encode(array_merge($query_value_array, array('stats' => $mc->getStats())), JSON_PRETTY_PRINT);
-                break;
 
             case 'set_all':
                 $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
@@ -86,7 +84,6 @@ final readonly class MemcachedAPI
                 $isLoaded = Memcached::set_all_debug_items_memcache();
                 $result = array_merge($query_value_array, array("status" => $isLoaded, "datetime" => $datetime));
                 return json_encode($result, JSON_PRETTY_PRINT);
-                break;
 
             case 'set':
                 $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
@@ -94,33 +91,27 @@ final readonly class MemcachedAPI
                 $isLoaded = Memcached::set_debug_items_memcache($value);
                 $result = array_merge($query_value_array, array('set_status' => array("status" => $isLoaded, "datetime" => $datetime)));
                 return json_encode($result, JSON_PRETTY_PRINT);
-                break;
 
             case 'get':
                 $cached_data = Memcached::get_debug_items_memcache($value);
                 return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
-                break;
 
             case 'get_all':
                 $cached_data = Memcached::get_all_debug_items_memcache();
                 return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
-                break;
 
             case 'get_keys':
                 $keys = Memcached::get_all_debug_item_keys();
                 return json_encode(array_merge($query_value_array, array('db_keys' => $keys)), JSON_PRETTY_PRINT);
-                break;
 
             case 'db':
                 $db = Memcached::get_tbl_debug_items($this->get['db']);
                 return json_encode(array_merge($query_value_array, array('tbl_debug_items' => $db)), JSON_PRETTY_PRINT);
-                break;
 
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
                 $result = array_merge($query_value_array, array("status" => $isFlushed, "datetime" => $datetime));
                 return json_encode($result, JSON_PRETTY_PRINT);
-                break;
 
             case 'benchmark':
                 $this->run_memcached_benchmark($value);
