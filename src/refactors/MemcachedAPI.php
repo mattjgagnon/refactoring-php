@@ -32,37 +32,7 @@ final readonly class MemcachedAPI
         if ($isCLI && $this->argc > 1) {
             [$query, $value] = $this->get_cli_values($query, $value);
         } else {
-            if (isset($this->get['stats'])) {
-                // return memcached stats
-                $query = 'stats';
-                $value = $this->get['stats'];
-            } elseif (isset($this->get['set_all'])) {
-                // sets all debug item keys
-                $query = 'set_all';
-
-            } elseif (isset($this->get['set'])) {
-                $query = 'set';
-                $value = $this->get['set'];
-
-            } elseif (isset($this->get['get'])) {
-                $query = 'get';
-                $value = $this->get['get'];
-
-            } elseif (isset($this->get['get_all'])) {
-                $query = 'get_all';
-
-            } elseif (isset($this->get['get_keys'])) {
-                $query = 'get_keys';
-
-            } elseif (isset($this->get['db'])) {
-                $query = 'db';
-
-            } elseif (isset($this->get['flush'])) {
-                $query = 'flush';
-
-            } elseif (isset($this->get['benchmark'])) {
-                $query = 'benchmark';
-            }
+            [$query, $value] = $this->get_params($query, $value);
         }
 
         $query_value_array = array('command' => array('query' => $query, 'value' => $value, 'hostname' => gethostname()));
@@ -171,6 +141,43 @@ final readonly class MemcachedAPI
 
         if (count($input_array) > 1) {
             $value = $input_array[1];
+        }
+
+        return [$query, $value];
+    }
+
+    private function get_params(?string $query, mixed $value): array
+    {
+        if (isset($this->get['stats'])) {
+            // return memcached stats
+            $query = 'stats';
+            $value = $this->get['stats'];
+        } elseif (isset($this->get['set_all'])) {
+            // sets all debug item keys
+            $query = 'set_all';
+
+        } elseif (isset($this->get['set'])) {
+            $query = 'set';
+            $value = $this->get['set'];
+
+        } elseif (isset($this->get['get'])) {
+            $query = 'get';
+            $value = $this->get['get'];
+
+        } elseif (isset($this->get['get_all'])) {
+            $query = 'get_all';
+
+        } elseif (isset($this->get['get_keys'])) {
+            $query = 'get_keys';
+
+        } elseif (isset($this->get['db'])) {
+            $query = 'db';
+
+        } elseif (isset($this->get['flush'])) {
+            $query = 'flush';
+
+        } elseif (isset($this->get['benchmark'])) {
+            $query = 'benchmark';
         }
 
         return [$query, $value];
