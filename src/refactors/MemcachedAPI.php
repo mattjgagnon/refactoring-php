@@ -114,15 +114,12 @@ final readonly class MemcachedAPI
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'benchmark':
-                $this->run_memcached_benchmark($value);
-                break;
+                return $this->run_memcached_benchmark($value);
 
             default:
                 $result = array("message" => "tbd -list all commands here");
                 return json_encode($result, JSON_PRETTY_PRINT);
         }
-
-        return '';
     }
 
     private function run_memcached_benchmark($value = 1): false|string

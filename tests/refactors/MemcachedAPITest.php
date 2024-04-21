@@ -263,6 +263,10 @@ final class MemcachedAPITest extends TestCase
 
         // assert
         $results_array = json_decode($results, 1);
-        $this->assertNull($results_array);
+        $this->assertIsArray($results_array);
+        $this->assertArrayHasKey('iteration', $results_array);
+        $this->assertArrayHasKey('static', $results_array);
+        $this->assertArrayHasKey('session', $results_array);
+        $this->assertArrayHasKey('globals', $results_array);
     }
 }
