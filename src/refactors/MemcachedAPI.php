@@ -30,15 +30,7 @@ final readonly class MemcachedAPI
         $isCLI = (php_sapi_name() == 'cli');
 
         if ($isCLI && $this->argc > 1) {
-            $input_array = explode('=', $this->argv[1]);
-
-            if (count($input_array) > 0) {
-                $query = $input_array[0];
-            }
-
-            if (count($input_array) > 1) {
-                $value = $input_array[1];
-            }
+            [$query, $value] = $this->get_cli_values($query, $value);
         } else {
             if (isset($this->get['stats'])) {
                 // return memcached stats
@@ -167,5 +159,20 @@ final readonly class MemcachedAPI
         $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
 
         return json_encode($result);
+    }
+
+    private function get_cli_values(?string $query, ?string $value): array
+    {
+        $input_array = explode('=', $this->argv[1]);
+
+        if (count($input_array) > 0) {
+            $query = $input_array[0];
+        }
+
+        if (count($input_array) > 1) {
+            $value = $input_array[1];
+        }
+
+        return [$query, $value];
     }
 }
