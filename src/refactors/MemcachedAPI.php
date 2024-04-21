@@ -8,12 +8,8 @@ use Exception;
 
 final readonly class MemcachedAPI
 {
-    public function __construct(
-        private array $argv,
-        private int   $argc,
-        private array $get,
-        private array $session,
-    ) {
+    public function __construct(private array $argv, private int $argc, private array $get, private array $session,)
+    {
     }
 
     /**
@@ -24,111 +20,70 @@ final readonly class MemcachedAPI
         $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
         $mc = Memcached::init();
 
-        $query = null;
-        $value = null;
+        [$query, $value] = $this->get_query_value();
 
-        $isCLI = (php_sapi_name() == 'cli');
-
-        if ($isCLI && $this->argc > 1) {
-            [$query, $value] = $this->get_cli_values($query, $value);
-        } else {
-            [$query, $value] = $this->get_params($query, $value);
-        }
-
-        $query_value_array = array('command' => array('query' => $query, 'value' => $value, 'hostname' => gethostname()));
+        $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname()]];
 
         switch ($query) {
             case 'stats':
-                return json_encode(array_merge($query_value_array, array('stats' => $mc->getStats())), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, ['stats' => $mc->getStats()]), JSON_PRETTY_PRINT);
 
             case 'set_all':
                 $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_all_debug_items_memcache();
-                $result = array_merge($query_value_array, array("status" => $isLoaded, "datetime" => $datetime));
+                $result = array_merge($query_value_array, ["status" => $isLoaded, "datetime" => $datetime]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'set':
                 $datetime = new DateTime('now', new DateTimeZone('America/New_York'));
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_debug_items_memcache($value);
-                $result = array_merge($query_value_array, array('set_status' => array("status" => $isLoaded, "datetime" => $datetime)));
+                $result = array_merge($query_value_array, ['set_status' => ["status" => $isLoaded, "datetime" => $datetime]]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'get':
                 $cached_data = Memcached::get_debug_items_memcache($value);
-                return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, ['memcached_data' => $cached_data]), JSON_PRETTY_PRINT);
 
             case 'get_all':
                 $cached_data = Memcached::get_all_debug_items_memcache();
-                return json_encode(array_merge($query_value_array, array('memcached_data' => $cached_data)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, ['memcached_data' => $cached_data]), JSON_PRETTY_PRINT);
 
             case 'get_keys':
                 $keys = Memcached::get_all_debug_item_keys();
-                return json_encode(array_merge($query_value_array, array('db_keys' => $keys)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, ['db_keys' => $keys]), JSON_PRETTY_PRINT);
 
             case 'db':
                 $db = Memcached::get_tbl_debug_items($this->get['db']);
-                return json_encode(array_merge($query_value_array, array('tbl_debug_items' => $db)), JSON_PRETTY_PRINT);
+                return json_encode(array_merge($query_value_array, ['tbl_debug_items' => $db]), JSON_PRETTY_PRINT);
 
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
-                $result = array_merge($query_value_array, array("status" => $isFlushed, "datetime" => $datetime));
+                $result = array_merge($query_value_array, ["status" => $isFlushed, "datetime" => $datetime]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'benchmark':
                 return $this->run_memcached_benchmark($value);
 
             default:
-                $result = array("message" => "tbd -list all commands here");
+                $result = ["message" => "tbd -list all commands here"];
                 return json_encode($result, JSON_PRETTY_PRINT);
         }
     }
 
-    private function run_memcached_benchmark($value = 1): false|string
+    private function get_query_value(): array
     {
-        $memcached_data = new MemcachedData();
-        $iteration = $value ?? 1;
-        $result = ['iteration' => $iteration];
-        $time_start_static = microtime(true);
+        $query = NULL;
+        $value = NULL;
 
-        for ($i = 0; $i < $iteration; $i++) {
-            if ($memcached_data->data == null) {
-                $memcached_data->data = Memcached::get_all_debug_items_memcache();
-            }
+        $isCLI = (php_sapi_name() == 'cli');
+
+        if ($isCLI && $this->argc > 1) {
+            return $this->get_cli_values($query, $value);
+        } else {
+            return $this->get_params($query, $value);
         }
-
-        $time_end_static = microtime(true);
-
-        $result['static'] = round(($time_end_static - $time_start_static) * 1000);
-
-        $start_session_time = microtime(true);
-
-        for ($i = 0; $i < $iteration; $i++) {
-            if (!isset($this->session['lg_debug_items'])) {
-                $cached_data = Memcached::get_all_debug_items_memcache();
-                $_SESSION['lg_debug_items'] = $cached_data;
-            }
-        }
-
-        $time_session_end = microtime(true);
-
-        $result['session'] = round(($time_session_end - $start_session_time) * 1000);
-
-        $time_globals_start = microtime(true);
-
-        for ($i = 0; $i < $iteration; $i++) {
-            if (!isset($GLOBALS["lg_debug_items"])) {
-                $cached_data = Memcached::get_all_debug_items_memcache();
-                $GLOBALS["lg_debug_items"] = $cached_data;
-            }
-        }
-
-        $time_globals_end = microtime(true);
-
-        $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
-
-        return json_encode($result);
     }
 
     private function get_cli_values(?string $query, ?string $value): array
@@ -181,5 +136,51 @@ final readonly class MemcachedAPI
         }
 
         return [$query, $value];
+    }
+    
+    private function run_memcached_benchmark($value = 1): false|string
+    {
+        $memcached_data = new MemcachedData();
+        $iteration = $value ?? 1;
+        $result = ['iteration' => $iteration];
+        $time_start_static = microtime(TRUE);
+
+        for ($i = 0; $i < $iteration; $i++) {
+            if ($memcached_data->data == NULL) {
+                $memcached_data->data = Memcached::get_all_debug_items_memcache();
+            }
+        }
+
+        $time_end_static = microtime(TRUE);
+
+        $result['static'] = round(($time_end_static - $time_start_static) * 1000);
+
+        $start_session_time = microtime(TRUE);
+
+        for ($i = 0; $i < $iteration; $i++) {
+            if (!isset($this->session['lg_debug_items'])) {
+                $cached_data = Memcached::get_all_debug_items_memcache();
+                $_SESSION['lg_debug_items'] = $cached_data;
+            }
+        }
+
+        $time_session_end = microtime(TRUE);
+
+        $result['session'] = round(($time_session_end - $start_session_time) * 1000);
+
+        $time_globals_start = microtime(TRUE);
+
+        for ($i = 0; $i < $iteration; $i++) {
+            if (!isset($GLOBALS["lg_debug_items"])) {
+                $cached_data = Memcached::get_all_debug_items_memcache();
+                $GLOBALS["lg_debug_items"] = $cached_data;
+            }
+        }
+
+        $time_globals_end = microtime(TRUE);
+
+        $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
+
+        return json_encode($result);
     }
 }
