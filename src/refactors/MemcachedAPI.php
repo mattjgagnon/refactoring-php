@@ -31,8 +31,13 @@ final readonly class MemcachedAPI
 
         if ($isCLI && $this->argc > 1) {
             $input_array = explode('=', $this->argv[1]);
-            if (count($input_array) > 0) $query = $input_array[0];
-            if (count($input_array) > 1) $value = $input_array[1];
+            if (count($input_array) > 0) {
+                $query = $input_array[0];
+            }
+
+            if (count($input_array) > 1) {
+                $value = $input_array[1];
+            }
         } else {
             if (isset($this->get['stats'])) {
                 // return memcached stats
