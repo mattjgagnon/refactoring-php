@@ -30,8 +30,8 @@ final readonly class MemcachedAPI
         $isCLI = (php_sapi_name() == 'cli');
 
         if ($isCLI && $this->argc > 1) {
-            $t = $this->argv[1];
             $input_array = explode('=', $this->argv[1]);
+
             if (count($input_array) > 0) {
                 $query = $input_array[0];
             }
