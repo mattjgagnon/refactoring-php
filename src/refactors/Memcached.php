@@ -24,12 +24,8 @@ final class Memcached
         return [];
     }
 
-    public static function get_tbl_debug_items($db): array
-    {
-        return [];
-    }
 
-    public function getStats(): array
+    public static function get_tbl_debug_items($db): array
     {
         return [];
     }
@@ -45,6 +41,11 @@ final class Memcached
     }
 
     public static function set_debug_items_memcache($value): array
+    {
+        return [];
+    }
+
+    public function getStats(): array
     {
         return [];
     }

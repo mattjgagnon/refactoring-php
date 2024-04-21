@@ -8,13 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 final class MemcachedAPITest extends TestCase
 {
+
     #[Test] public function it_calls_memcached_api_and_responds_with_default_message()
     {
         // assemble
-        $argv = [
-            0 => '',
-            1 => 'value1=value2',
-        ];
+        $argv = [0 => '', 1 => 'value1=value2',];
         $argc = 2;
         $get = [];
         $session = [];
@@ -35,9 +33,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'stats' => '',
-        ];
+        $get = ['stats' => '',];
         $session = [];
 
         // act
@@ -61,9 +57,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'set_all' => '',
-        ];
+        $get = ['set_all' => '',];
         $session = [];
 
         // act
@@ -87,9 +81,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'set' => '',
-        ];
+        $get = ['set' => '',];
         $session = [];
 
         // act
@@ -115,9 +107,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'get' => '',
-        ];
+        $get = ['get' => '',];
         $session = [];
 
         // act
@@ -142,9 +132,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'get_all' => '',
-        ];
+        $get = ['get_all' => '',];
         $session = [];
 
         // act
@@ -169,9 +157,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'get_keys' => '',
-        ];
+        $get = ['get_keys' => '',];
         $session = [];
 
         // act
@@ -196,9 +182,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'db' => '',
-        ];
+        $get = ['db' => '',];
         $session = [];
 
         // act
@@ -223,9 +207,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'flush' => '',
-        ];
+        $get = ['flush' => '',];
         $session = [];
 
         // act
@@ -255,9 +237,7 @@ final class MemcachedAPITest extends TestCase
         // assemble
         $argv = [];
         $argc = 0;
-        $get = [
-            'benchmark' => '',
-        ];
+        $get = ['benchmark' => '',];
         $session = [];
 
         // act

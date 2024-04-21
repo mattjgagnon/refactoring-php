@@ -137,7 +137,7 @@ final readonly class MemcachedAPI
 
         return [$query, $value];
     }
-    
+
     private function run_memcached_benchmark($value = 1): false|string
     {
         $memcached_data = new MemcachedData();
