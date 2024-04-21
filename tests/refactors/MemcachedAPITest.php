@@ -11,7 +11,10 @@ final class MemcachedAPITest extends TestCase
     #[Test] public function it_calls_memcached_api_and_responds_with_default_message()
     {
         // assemble
-        $argv = [];
+        $argv = [
+            0 => '',
+            1 => 'value1=value2',
+        ];
         $argc = 2;
         $get = [];
         $session = [];
