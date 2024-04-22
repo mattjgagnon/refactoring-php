@@ -153,12 +153,7 @@ final readonly class MemcachedAPI
 
         $start_session_time = microtime(TRUE);
 
-        for ($i = 0; $i < $iteration; $i++) {
-            if (!isset($this->session['lg_debug_items'])) {
-                $cached_data = Memcached::get_all_debug_items_memcache();
-                $_SESSION['lg_debug_items'] = $cached_data;
-            }
-        }
+        $this->populate_session($iteration);
 
         $time_session_end = microtime(TRUE);
 
@@ -185,6 +180,16 @@ final readonly class MemcachedAPI
         for ($i = 0; $i < $iteration; $i++) {
             if ($memcached_data->data == NULL) {
                 $memcached_data->data = Memcached::get_all_debug_items_memcache();
+            }
+        }
+    }
+
+    private function populate_session(mixed $iteration): void
+    {
+        for ($i = 0; $i < $iteration; $i++) {
+            if (!isset($this->session['lg_debug_items'])) {
+                $cached_data = Memcached::get_all_debug_items_memcache();
+                $_SESSION['lg_debug_items'] = $cached_data;
             }
         }
     }
