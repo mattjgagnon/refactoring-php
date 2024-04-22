@@ -81,24 +81,38 @@ final readonly class MemcachedAPI
 
         if ($isCLI && $this->argc > 1) {
             return $this->get_cli_values($query, $value);
-        } else {
-            return $this->get_params($query, $value);
         }
+
+        return $this->get_params($query, $value);
     }
 
     private function get_cli_values(?string $query, ?string $value): array
     {
         $input_array = explode('=', $this->argv[1]);
 
+        $query = $this->get_query_part($input_array, $query);
+
+        $value = $this->get_value_part($input_array, $value);
+
+        return [$query, $value];
+    }
+
+    private function get_query_part(array $input_array, ?string $query): mixed
+    {
         if (count($input_array) > 0) {
             $query = $input_array[0];
         }
 
+        return $query;
+    }
+
+    private function get_value_part(array $input_array, ?string $value): mixed
+    {
         if (count($input_array) > 1) {
             $value = $input_array[1];
         }
 
-        return [$query, $value];
+        return $value;
     }
 
     private function get_params(?string $query, mixed $value): array
