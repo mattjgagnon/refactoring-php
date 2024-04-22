@@ -145,11 +145,7 @@ final readonly class MemcachedAPI
         $result = ['iteration' => $iteration];
         $time_start_static = microtime(TRUE);
 
-        for ($i = 0; $i < $iteration; $i++) {
-            if ($memcached_data->data == NULL) {
-                $memcached_data->data = Memcached::get_all_debug_items_memcache();
-            }
-        }
+        $this->populate_memcached_data($iteration, $memcached_data);
 
         $time_end_static = microtime(TRUE);
 
@@ -182,5 +178,14 @@ final readonly class MemcachedAPI
         $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
 
         return json_encode($result);
+    }
+
+    private function populate_memcached_data(mixed $iteration, MemcachedData $memcached_data): void
+    {
+        for ($i = 0; $i < $iteration; $i++) {
+            if ($memcached_data->data == NULL) {
+                $memcached_data->data = Memcached::get_all_debug_items_memcache();
+            }
+        }
     }
 }
