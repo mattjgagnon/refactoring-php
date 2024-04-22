@@ -161,12 +161,7 @@ final readonly class MemcachedAPI
 
         $time_globals_start = microtime(TRUE);
 
-        for ($i = 0; $i < $iteration; $i++) {
-            if (!isset($GLOBALS["lg_debug_items"])) {
-                $cached_data = Memcached::get_all_debug_items_memcache();
-                $GLOBALS["lg_debug_items"] = $cached_data;
-            }
-        }
+        $this->populate_globals($iteration);
 
         $time_globals_end = microtime(TRUE);
 
@@ -190,6 +185,16 @@ final readonly class MemcachedAPI
             if (!isset($this->session['lg_debug_items'])) {
                 $cached_data = Memcached::get_all_debug_items_memcache();
                 $_SESSION['lg_debug_items'] = $cached_data;
+            }
+        }
+    }
+
+    private function populate_globals(mixed $iteration): void
+    {
+        for ($i = 0; $i < $iteration; $i++) {
+            if (!isset($GLOBALS["lg_debug_items"])) {
+                $cached_data = Memcached::get_all_debug_items_memcache();
+                $GLOBALS["lg_debug_items"] = $cached_data;
             }
         }
     }
