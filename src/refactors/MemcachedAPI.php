@@ -21,6 +21,7 @@ final readonly class MemcachedAPI
     public function memcached_api(): false|string
     {
         $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
+        $datetime_formatted = $datetime->format('F j, Y H:i:s');
         $mc = Memcached::init();
 
         [$query, $value] = $this->get_query_value();
@@ -32,17 +33,13 @@ final readonly class MemcachedAPI
                 return json_encode(array_merge($query_value_array, ['stats' => $mc->getStats()]), JSON_PRETTY_PRINT);
 
             case 'set_all':
-                $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
-                $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_all_debug_items_memcache();
-                $result = array_merge($query_value_array, ['status' => $isLoaded, 'datetime' => $datetime]);
+                $result = array_merge($query_value_array, ['status' => $isLoaded, 'datetime' => $datetime_formatted]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'set':
-                $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
-                $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_debug_items_memcache($value);
-                $result = array_merge($query_value_array, ['set_status' => ['status' => $isLoaded, 'datetime' => $datetime]]);
+                $result = array_merge($query_value_array, ['set_status' => ['status' => $isLoaded, 'datetime' => $datetime_formatted]]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'get':
