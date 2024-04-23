@@ -35,14 +35,14 @@ final readonly class MemcachedAPI
                 $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_all_debug_items_memcache();
-                $result = array_merge($query_value_array, ["status" => $isLoaded, "datetime" => $datetime]);
+                $result = array_merge($query_value_array, ['status' => $isLoaded, 'datetime' => $datetime]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'set':
                 $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
                 $datetime = $datetime->format('F j, Y H:i:s');
                 $isLoaded = Memcached::set_debug_items_memcache($value);
-                $result = array_merge($query_value_array, ['set_status' => ["status" => $isLoaded, "datetime" => $datetime]]);
+                $result = array_merge($query_value_array, ['set_status' => ['status' => $isLoaded, 'datetime' => $datetime]]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'get':
@@ -63,14 +63,14 @@ final readonly class MemcachedAPI
 
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
-                $result = array_merge($query_value_array, ["status" => $isFlushed, "datetime" => $datetime]);
+                $result = array_merge($query_value_array, ['status' => $isFlushed, 'datetime' => $datetime]);
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'benchmark':
                 return $this->run_memcached_benchmark($value);
 
             default:
-                $result = ["message" => self::MSG_LIST_COMMANDS];
+                $result = ['message' => self::MSG_LIST_COMMANDS];
                 return json_encode($result, JSON_PRETTY_PRINT);
         }
     }
@@ -209,9 +209,9 @@ final readonly class MemcachedAPI
     private function populate_globals(mixed $iteration): void
     {
         for ($i = 0; $i < $iteration; $i++) {
-            if (!isset($GLOBALS["lg_debug_items"])) {
+            if (!isset($GLOBALS['lg_debug_items'])) {
                 $cached_data = Memcached::get_all_debug_items_memcache();
-                $GLOBALS["lg_debug_items"] = $cached_data;
+                $GLOBALS['lg_debug_items'] = $cached_data;
             }
         }
     }
