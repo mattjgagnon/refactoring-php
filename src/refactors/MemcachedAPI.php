@@ -30,33 +30,38 @@ final readonly class MemcachedAPI
 
         switch ($query) {
             case 'stats':
-                return json_encode(array_merge($query_value_array, ['stats' => $mc->getStats()]), JSON_PRETTY_PRINT);
+                $result = array_merge($query_value_array, ['stats' => $mc->getStats()]);
+                break;
 
             case 'set_all':
                 $isLoaded = Memcached::set_all_debug_items_memcache();
                 $result = array_merge($query_value_array, ['status' => $isLoaded, 'datetime' => $datetime_formatted]);
-                return json_encode($result, JSON_PRETTY_PRINT);
+                break;
 
             case 'set':
                 $isLoaded = Memcached::set_debug_items_memcache($value);
                 $result = array_merge($query_value_array, ['set_status' => ['status' => $isLoaded, 'datetime' => $datetime_formatted]]);
-                return json_encode($result, JSON_PRETTY_PRINT);
+                break;
 
             case 'get':
                 $cached_data = Memcached::get_debug_items_memcache($value);
-                return json_encode(array_merge($query_value_array, ['memcached_data' => $cached_data]), JSON_PRETTY_PRINT);
+                $result = array_merge($query_value_array, ['memcached_data' => $cached_data]);
+                break;
 
             case 'get_all':
                 $cached_data = Memcached::get_all_debug_items_memcache();
-                return json_encode(array_merge($query_value_array, ['memcached_data' => $cached_data]), JSON_PRETTY_PRINT);
+                $result = array_merge($query_value_array, ['memcached_data' => $cached_data]);
+                break;
 
             case 'get_keys':
                 $keys = Memcached::get_all_debug_item_keys();
-                return json_encode(array_merge($query_value_array, ['db_keys' => $keys]), JSON_PRETTY_PRINT);
+                $result = array_merge($query_value_array, ['db_keys' => $keys]);
+                break;
 
             case 'db':
                 $db = Memcached::get_tbl_debug_items($this->get['db']);
-                return json_encode(array_merge($query_value_array, ['tbl_debug_items' => $db]), JSON_PRETTY_PRINT);
+                $result = array_merge($query_value_array, ['tbl_debug_items' => $db]);
+                break;
 
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
