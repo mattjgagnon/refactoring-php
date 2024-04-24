@@ -68,8 +68,9 @@ final readonly class MemcachedAPI
 
             default:
                 $result = ['message' => self::MSG_LIST_COMMANDS];
-                return json_encode($result, JSON_PRETTY_PRINT);
         }
+
+        return json_encode($result, JSON_PRETTY_PRINT);
     }
 
     private function get_query_value(): array
