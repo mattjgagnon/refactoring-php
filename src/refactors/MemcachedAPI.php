@@ -64,10 +64,12 @@ final readonly class MemcachedAPI
                 return json_encode($result, JSON_PRETTY_PRINT);
 
             case 'benchmark':
-                return $this->run_memcached_benchmark($value);
+                $result = $this->run_memcached_benchmark($value);
+                break;
 
             default:
                 $result = ['message' => self::MSG_LIST_COMMANDS];
+                break;
         }
 
         return json_encode($result, JSON_PRETTY_PRINT);
@@ -153,7 +155,7 @@ final readonly class MemcachedAPI
         return [$query, $value];
     }
 
-    private function run_memcached_benchmark($value = 1): false|string
+    private function run_memcached_benchmark($value = 1): array
     {
         $memcached_data = new MemcachedData();
         $iteration = $value ?? 1;
@@ -182,7 +184,7 @@ final readonly class MemcachedAPI
 
         $result['globals'] = round(($time_globals_end - $time_globals_start) * 1000);
 
-        return json_encode($result);
+        return $result;
     }
 
     private function populate_memcached_data(mixed $iteration, MemcachedData $memcached_data): void
