@@ -61,7 +61,7 @@ final readonly class MemcachedAPI
             case 'flush':
                 $isFlushed = Memcached::flush_debug_items_for_memcache();
                 $result = array_merge($query_value_array, ['status' => $isFlushed, 'datetime' => $datetime]);
-                return json_encode($result, JSON_PRETTY_PRINT);
+                break;
 
             case 'benchmark':
                 $result = $this->run_memcached_benchmark($value);
