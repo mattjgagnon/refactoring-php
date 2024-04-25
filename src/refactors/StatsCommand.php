@@ -8,7 +8,7 @@ final class StatsCommand
     {
     }
 
-    public function execute()
+    public function execute(): array
     {
         $mc = Memcached::init();
         return array_merge($this->query_value_array, ['stats' => $mc->getStats()]);
