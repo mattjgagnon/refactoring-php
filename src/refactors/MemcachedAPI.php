@@ -39,8 +39,8 @@ final readonly class MemcachedAPI
                 break;
 
             case 'set':
-                $isLoaded = Memcached::set_debug_items_memcache($value);
-                $result = array_merge($query_value_array, ['set_status' => ['status' => $isLoaded, 'datetime' => $datetime_formatted]]);
+                $command = new SetCommand($query_value_array, $datetime_formatted, $value);
+                $result = $command->execute();
                 break;
 
             case 'get':
