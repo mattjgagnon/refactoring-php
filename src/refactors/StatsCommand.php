@@ -2,7 +2,7 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-final class StatsCommand
+final class StatsCommand implements MemcachedCommandInterface
 {
     public function __construct(public array $query_value_array)
     {
