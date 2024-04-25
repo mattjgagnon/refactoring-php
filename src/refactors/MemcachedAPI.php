@@ -22,7 +22,6 @@ final readonly class MemcachedAPI
     {
         $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
         $datetime_formatted = $datetime->format('F j, Y H:i:s');
-        $mc = Memcached::init();
 
         [$query, $value] = $this->get_query_value();
 
@@ -30,7 +29,8 @@ final readonly class MemcachedAPI
 
         switch ($query) {
             case 'stats':
-                $result = array_merge($query_value_array, ['stats' => $mc->getStats()]);
+                $command = new StatsCommand($query_value_array);
+                $result = $command->execute();
                 break;
 
             case 'set_all':
