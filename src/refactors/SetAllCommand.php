@@ -2,9 +2,9 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-final class SetAllCommand implements MemcachedCommandInterface
+final readonly class SetAllCommand implements MemcachedCommandInterface
 {
-    public function __construct(public array $query_value_array, public string $datetime_formatted)
+    public function __construct(private array $query_value_array, private string $datetime_formatted)
     {
     }
 
