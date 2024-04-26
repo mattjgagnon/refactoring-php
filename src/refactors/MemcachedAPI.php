@@ -59,8 +59,8 @@ final readonly class MemcachedAPI
                 break;
 
             case 'db':
-                $db = Memcached::get_tbl_debug_items($this->get['db']);
-                $result = array_merge($query_value_array, ['tbl_debug_items' => $db]);
+                $command = new DbCommand($query_value_array, $this->get['db']);
+                $result = $command->execute();
                 break;
 
             case 'flush':
