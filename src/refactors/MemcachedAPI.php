@@ -49,8 +49,8 @@ final readonly class MemcachedAPI
                 break;
 
             case 'get_all':
-                $cached_data = Memcached::get_all_debug_items_memcache();
-                $result = array_merge($query_value_array, ['memcached_data' => $cached_data]);
+                $command = new GetAllCommand($query_value_array);
+                $result = $command->execute();
                 break;
 
             case 'get_keys':
