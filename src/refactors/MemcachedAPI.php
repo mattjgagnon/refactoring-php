@@ -29,54 +29,46 @@ final readonly class MemcachedAPI
         switch ($query) {
             case 'stats':
                 $command = new StatsCommand($query_value_array);
-                $result = $command->execute();
                 break;
 
             case 'set_all':
                 $command = new SetAllCommand($query_value_array, $datetime_formatted);
-                $result = $command->execute();
                 break;
 
             case 'set':
                 $command = new SetCommand($query_value_array, $datetime_formatted, $value);
-                $result = $command->execute();
                 break;
 
             case 'get':
                 $command = new GetCommand($query_value_array, $value);
-                $result = $command->execute();
                 break;
 
             case 'get_all':
                 $command = new GetAllCommand($query_value_array);
-                $result = $command->execute();
                 break;
 
             case 'get_keys':
                 $command = new GetKeysCommand($query_value_array);
-                $result = $command->execute();
                 break;
 
             case 'db':
                 $command = new DbCommand($query_value_array, $this->get['db']);
-                $result = $command->execute();
                 break;
 
             case 'flush':
                 $command = new FlushCommand($query_value_array, $datetime);
-                $result = $command->execute();
                 break;
 
             case 'benchmark':
-                $command = new BenchmarkCommand($value);
-                $result = $command->execute();
+                $command = new BenchmarkCommand($query_value_array, $value);
                 break;
 
             default:
-                $command = new ListCommand();
-                $result = $command->execute();
+                $command = new ListCommand($query_value_array);
                 break;
         }
+
+        $result = $command->execute();
 
         return json_encode($result, JSON_PRETTY_PRINT);
     }

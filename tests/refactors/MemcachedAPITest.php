@@ -22,10 +22,15 @@ final class MemcachedAPITest extends TestCase
         $results = $memcached->memcached_api();
 
         // assert
-        $this->assertIsString($results);
-        $this->assertSame('{
-    "message": "tbd -list all commands here"
-}', $results);
+        $results_array = json_decode($results, 1);
+        $this->assertArrayHasKey('command', $results_array);
+        $this->assertIsArray($results_array);
+        $this->assertIsArray($results_array['command']);
+        $this->assertArrayHasKey('query', $results_array['command']);
+        $this->assertArrayHasKey('value', $results_array['command']);
+        $this->assertArrayHasKey('hostname', $results_array['command']);
+        $this->assertArrayHasKey('message', $results_array);
+        $this->assertIsString($results_array['message']);
     }
 
     #[Test] public function it_calls_memcached_api_and_responds()

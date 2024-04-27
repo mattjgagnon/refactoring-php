@@ -2,16 +2,16 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-final class ListCommand implements MemcachedCommandInterface
+final readonly class ListCommand implements MemcachedCommandInterface
 {
     private const MSG_LIST_COMMANDS = 'tbd -list all commands here';
 
-    public function __construct()
+    public function __construct(private array $query_value_array)
     {
     }
 
     public function execute(): array
     {
-        return ['message' => self::MSG_LIST_COMMANDS];
+        return array_merge($this->query_value_array, ['message' => self::MSG_LIST_COMMANDS]);
     }
 }

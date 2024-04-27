@@ -4,13 +4,14 @@ namespace mattjgagnon\RefactoringPhp\refactors;
 
 final readonly class BenchmarkCommand implements MemcachedCommandInterface
 {
-    public function __construct(private mixed $value)
+    public function __construct(private array $query_value_array, private mixed $value)
     {
     }
 
     public function execute(): array
     {
-        return $this->run_memcached_benchmark($this->value);
+        $result = $this->run_memcached_benchmark($this->value);
+        return array_merge($this->query_value_array, $result);
     }
 
     private function run_memcached_benchmark($value = 1): array
