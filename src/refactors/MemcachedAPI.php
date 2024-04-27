@@ -9,7 +9,6 @@ use Exception;
 final readonly class MemcachedAPI
 {
     private const TIMEZONE_DEFAULT = 'America/New_York';
-    private const MSG_LIST_COMMANDS = 'tbd -list all commands here';
 
     public function __construct(private array $argv, private int $argc, private array $get, private array $session,)
     {
@@ -74,7 +73,8 @@ final readonly class MemcachedAPI
                 break;
 
             default:
-                $result = ['message' => self::MSG_LIST_COMMANDS];
+                $command = new ListCommand();
+                $result = $command->execute();
                 break;
         }
 
