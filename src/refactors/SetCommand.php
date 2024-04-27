@@ -2,7 +2,7 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-final readonly class SetCommand
+final readonly class SetCommand implements MemcachedCommandInterface
 {
     public function __construct(private array $query_value_array, private string $datetime_formatted, private mixed $value)
     {

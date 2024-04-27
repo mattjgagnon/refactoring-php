@@ -26,47 +26,18 @@ final readonly class MemcachedAPI
 
         $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname()]];
 
-        switch ($query) {
-            case 'stats':
-                $command = new StatsCommand($query_value_array);
-                break;
-
-            case 'set_all':
-                $command = new SetAllCommand($query_value_array, $datetime_formatted);
-                break;
-
-            case 'set':
-                $command = new SetCommand($query_value_array, $datetime_formatted, $value);
-                break;
-
-            case 'get':
-                $command = new GetCommand($query_value_array, $value);
-                break;
-
-            case 'get_all':
-                $command = new GetAllCommand($query_value_array);
-                break;
-
-            case 'get_keys':
-                $command = new GetKeysCommand($query_value_array);
-                break;
-
-            case 'db':
-                $command = new DbCommand($query_value_array, $this->get['db']);
-                break;
-
-            case 'flush':
-                $command = new FlushCommand($query_value_array, $datetime);
-                break;
-
-            case 'benchmark':
-                $command = new BenchmarkCommand($query_value_array, $value);
-                break;
-
-            default:
-                $command = new ListCommand($query_value_array);
-                break;
-        }
+        $command = match ($query) {
+            'stats' => new StatsCommand($query_value_array),
+            'set_all' => new SetAllCommand($query_value_array, $datetime_formatted),
+            'set' => new SetCommand($query_value_array, $datetime_formatted, $value),
+            'get' => new GetCommand($query_value_array, $value),
+            'get_all' => new GetAllCommand($query_value_array),
+            'get_keys' => new GetKeysCommand($query_value_array),
+            'db' => new DbCommand($query_value_array, $this->get['db']),
+            'flush' => new FlushCommand($query_value_array, $datetime),
+            'benchmark' => new BenchmarkCommand($query_value_array, $value),
+            default => new ListCommand($query_value_array),
+        };
 
         $result = $command->execute();
 
