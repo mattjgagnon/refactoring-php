@@ -64,8 +64,8 @@ final readonly class MemcachedAPI
                 break;
 
             case 'flush':
-                $isFlushed = Memcached::flush_debug_items_for_memcache();
-                $result = array_merge($query_value_array, ['status' => $isFlushed, 'datetime' => $datetime]);
+                $command = new FlushCommand($query_value_array, $datetime);
+                $result = $command->execute();
                 break;
 
             case 'benchmark':
