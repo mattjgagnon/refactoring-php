@@ -30,12 +30,12 @@ final readonly class MemcachedAPI
             'set_all' => new SetAllCommand($query_value_array, $datetime),
             'set' => new SetCommand($query_value_array, $datetime, $value),
             'get' => new GetCommand($query_value_array, $value),
-            'get_all' => new GetAllCommand($query_value_array),
-            'get_keys' => new GetKeysCommand($query_value_array),
-            'db' => new DbCommand($query_value_array, $this->get['db']),
+            'get_all' => new GetAllCommand($query_value_array, $datetime),
+            'get_keys' => new GetKeysCommand($query_value_array, $datetime),
+            'db' => new DbCommand($query_value_array, $datetime, $this->get['db']),
             'flush' => new FlushCommand($query_value_array, $datetime),
-            'benchmark' => new BenchmarkCommand($query_value_array, $value),
-            default => new ListCommand($query_value_array),
+            'benchmark' => new BenchmarkCommand($query_value_array, $datetime, $value),
+            default => new ListCommand($query_value_array, $datetime),
         };
 
         $result = $command->execute();
