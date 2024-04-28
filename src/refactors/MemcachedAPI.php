@@ -27,7 +27,7 @@ final readonly class MemcachedAPI
         $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname()]];
 
         $command = match ($query) {
-            'stats' => new StatsCommand($query_value_array),
+            'stats' => new StatsCommand($query_value_array, $datetime),
             'set_all' => new SetAllCommand($query_value_array, $datetime_formatted),
             'set' => new SetCommand($query_value_array, $datetime_formatted, $value),
             'get' => new GetCommand($query_value_array, $value),
