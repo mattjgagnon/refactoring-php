@@ -20,7 +20,6 @@ final readonly class MemcachedAPI
     public function memcached_api(): false|string
     {
         $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
-        $datetime_formatted = $datetime->format('F j, Y H:i:s');
 
         [$query, $value] = $this->get_query_value();
 
@@ -28,8 +27,8 @@ final readonly class MemcachedAPI
 
         $command = match ($query) {
             'stats' => new StatsCommand($query_value_array, $datetime),
-            'set_all' => new SetAllCommand($query_value_array, $datetime_formatted),
-            'set' => new SetCommand($query_value_array, $datetime_formatted, $value),
+            'set_all' => new SetAllCommand($query_value_array, $datetime),
+            'set' => new SetCommand($query_value_array, $datetime, $value),
             'get' => new GetCommand($query_value_array, $value),
             'get_all' => new GetAllCommand($query_value_array),
             'get_keys' => new GetKeysCommand($query_value_array),
