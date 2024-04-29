@@ -24,20 +24,8 @@ final readonly class MemcachedAPI
         [$query, $value] = $this->get_query_value();
 
         $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname(),], 'datetime' => $datetime,];
-
-        $command = match ($query) {
-            'stats' => new StatsCommand($query_value_array),
-            'set_all' => new SetAllCommand($query_value_array),
-            'set' => new SetCommand($query_value_array),
-            'get' => new GetCommand($query_value_array),
-            'get_all' => new GetAllCommand($query_value_array),
-            'get_keys' => new GetKeysCommand($query_value_array),
-            'db' => new DbCommand($query_value_array),
-            'flush' => new FlushCommand($query_value_array),
-            'benchmark' => new BenchmarkCommand($query_value_array),
-            default => new ListCommand($query_value_array),
-        };
-
+        $command_class_name = $this->get_class_name($query);
+        $command = new $command_class_name($query_value_array);
         $result = $command->execute();
 
         return json_encode($result, JSON_PRETTY_PRINT);
@@ -122,5 +110,18 @@ final readonly class MemcachedAPI
         }
 
         return [$query, $value];
+    }
+
+    private function get_class_name(mixed $query): string
+    {
+        $name = str_replace('_', ' ', $query);
+        $name = ucwords($name);
+        $name = str_replace(' ', '', $name);
+
+        if (empty($name)) {
+            $name = 'List';
+        }
+
+        return __NAMESPACE__ . '\\' . $name . 'Command';
     }
 }
