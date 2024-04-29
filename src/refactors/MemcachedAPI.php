@@ -29,7 +29,7 @@ final readonly class MemcachedAPI
             'stats' => new StatsCommand($query_value_array, $datetime, $value),
             'set_all' => new SetAllCommand($query_value_array, $datetime),
             'set' => new SetCommand($query_value_array, $datetime, $value),
-            'get' => new GetCommand($query_value_array, $value),
+            'get' => new GetCommand($query_value_array, $datetime, $value),
             'get_all' => new GetAllCommand($query_value_array, $datetime),
             'get_keys' => new GetKeysCommand($query_value_array, $datetime),
             'db' => new DbCommand($query_value_array, $datetime, $this->get['db']),
