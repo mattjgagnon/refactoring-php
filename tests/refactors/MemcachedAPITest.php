@@ -104,7 +104,7 @@ final class MemcachedAPITest extends TestCase
         $this->assertArrayHasKey('hostname', $results_array['command']);
         $this->assertIsArray($results_array['set_status']);
         $this->assertArrayHasKey('status', $results_array['set_status']);
-        $this->assertArrayHasKey('datetime', $results_array['set_status']);
+        $this->assertArrayHasKey('datetime', $results_array);
     }
 
     #[Test] public function it_calls_memcached_with_get_api_and_responds()

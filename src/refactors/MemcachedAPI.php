@@ -23,19 +23,19 @@ final readonly class MemcachedAPI
 
         [$query, $value] = $this->get_query_value();
 
-        $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname()]];
+        $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname(),], 'datetime' => $datetime,];
 
         $command = match ($query) {
-            'stats' => new StatsCommand($query_value_array, $datetime),
-            'set_all' => new SetAllCommand($query_value_array, $datetime),
-            'set' => new SetCommand($query_value_array, $datetime),
-            'get' => new GetCommand($query_value_array, $datetime),
-            'get_all' => new GetAllCommand($query_value_array, $datetime),
-            'get_keys' => new GetKeysCommand($query_value_array, $datetime),
-            'db' => new DbCommand($query_value_array, $datetime),
-            'flush' => new FlushCommand($query_value_array, $datetime),
-            'benchmark' => new BenchmarkCommand($query_value_array, $datetime),
-            default => new ListCommand($query_value_array, $datetime),
+            'stats' => new StatsCommand($query_value_array),
+            'set_all' => new SetAllCommand($query_value_array),
+            'set' => new SetCommand($query_value_array),
+            'get' => new GetCommand($query_value_array),
+            'get_all' => new GetAllCommand($query_value_array),
+            'get_keys' => new GetKeysCommand($query_value_array),
+            'db' => new DbCommand($query_value_array),
+            'flush' => new FlushCommand($query_value_array),
+            'benchmark' => new BenchmarkCommand($query_value_array),
+            default => new ListCommand($query_value_array),
         };
 
         $result = $command->execute();

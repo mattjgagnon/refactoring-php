@@ -2,18 +2,16 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-use DateTime;
-
 final readonly class BenchmarkCommand implements MemcachedCommandInterface
 {
-    public function __construct(private array $query_value_array, private DateTime $datetime)
+    public function __construct(private array $query_value_array)
     {
     }
 
     public function execute(): array
     {
         $result = $this->run_memcached_benchmark($this->query_value_array['value']);
-        return array_merge($this->query_value_array, ['datetime' => $this->datetime], $result);
+        return array_merge($this->query_value_array, $result);
     }
 
     private function run_memcached_benchmark($value = 1): array
