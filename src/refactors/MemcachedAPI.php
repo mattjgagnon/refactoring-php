@@ -26,15 +26,15 @@ final readonly class MemcachedAPI
         $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname()]];
 
         $command = match ($query) {
-            'stats' => new StatsCommand($query_value_array, $datetime, $value),
+            'stats' => new StatsCommand($query_value_array, $datetime),
             'set_all' => new SetAllCommand($query_value_array, $datetime),
-            'set' => new SetCommand($query_value_array, $datetime, $value),
-            'get' => new GetCommand($query_value_array, $datetime, $value),
+            'set' => new SetCommand($query_value_array, $datetime),
+            'get' => new GetCommand($query_value_array, $datetime),
             'get_all' => new GetAllCommand($query_value_array, $datetime),
             'get_keys' => new GetKeysCommand($query_value_array, $datetime),
-            'db' => new DbCommand($query_value_array, $datetime, $this->get['db']),
+            'db' => new DbCommand($query_value_array, $datetime),
             'flush' => new FlushCommand($query_value_array, $datetime),
-            'benchmark' => new BenchmarkCommand($query_value_array, $datetime, $value),
+            'benchmark' => new BenchmarkCommand($query_value_array, $datetime),
             default => new ListCommand($query_value_array, $datetime),
         };
 
@@ -112,6 +112,7 @@ final readonly class MemcachedAPI
 
         } elseif (isset($this->get['db'])) {
             $query = 'db';
+            $value = $this->get['db'];
 
         } elseif (isset($this->get['flush'])) {
             $query = 'flush';

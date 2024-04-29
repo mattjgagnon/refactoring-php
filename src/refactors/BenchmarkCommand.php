@@ -6,13 +6,13 @@ use DateTime;
 
 final readonly class BenchmarkCommand implements MemcachedCommandInterface
 {
-    public function __construct(private array $query_value_array, private DateTime $datetime, private mixed $value)
+    public function __construct(private array $query_value_array, private DateTime $datetime)
     {
     }
 
     public function execute(): array
     {
-        $result = $this->run_memcached_benchmark($this->value);
+        $result = $this->run_memcached_benchmark($this->query_value_array['value']);
         return array_merge($this->query_value_array, ['datetime' => $this->datetime], $result);
     }
 
