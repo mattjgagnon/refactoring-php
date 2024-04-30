@@ -21,9 +21,19 @@ final readonly class MemcachedAPI
     {
         $datetime = new DateTime('now', new DateTimeZone(self::TIMEZONE_DEFAULT));
 
-        [$query, $value] = $this->get_query_value();
+        [
+            $query,
+            $value,
+        ] = $this->get_query_value();
 
-        $query_value_array = ['command' => ['query' => $query, 'value' => $value, 'hostname' => gethostname(),], 'datetime' => $datetime,];
+        $query_value_array = [
+            'command' => [
+                'query' => $query,
+                'value' => $value,
+                'hostname' => gethostname(),
+            ],
+            'datetime' => $datetime,
+        ];
         $command_class_name = $this->get_class_name($query);
         $command = new $command_class_name($query_value_array);
         $result = $command->execute();
@@ -53,7 +63,10 @@ final readonly class MemcachedAPI
 
         $value = $this->get_value_part($input_array, $value);
 
-        return [$query, $value];
+        return [
+            $query,
+            $value,
+        ];
     }
 
     private function get_query_part(array $input_array, ?string $query): mixed
@@ -76,40 +89,30 @@ final readonly class MemcachedAPI
 
     private function get_params(?string $query, mixed $value): array
     {
-        if (isset($this->get['stats'])) {
-            // return memcached stats
-            $query = 'stats';
-            $value = $this->get['stats'];
-        } elseif (isset($this->get['set_all'])) {
-            // sets all debug item keys
-            $query = 'set_all';
+        $map = [
+            'stats' => 'stats',
+            'set_all' => 'set_all',
+            'set' => 'set',
+            'get' => 'get',
+            'get_all' => 'get_all',
+            'get_keys' => 'get_keys',
+            'db' => 'db',
+            'flush' => 'flush',
+            'benchmark' => 'benchmark',
+        ];
 
-        } elseif (isset($this->get['set'])) {
-            $query = 'set';
-            $value = $this->get['set'];
-
-        } elseif (isset($this->get['get'])) {
-            $query = 'get';
-            $value = $this->get['get'];
-
-        } elseif (isset($this->get['get_all'])) {
-            $query = 'get_all';
-
-        } elseif (isset($this->get['get_keys'])) {
-            $query = 'get_keys';
-
-        } elseif (isset($this->get['db'])) {
-            $query = 'db';
-            $value = $this->get['db'];
-
-        } elseif (isset($this->get['flush'])) {
-            $query = 'flush';
-
-        } elseif (isset($this->get['benchmark'])) {
-            $query = 'benchmark';
+        foreach ($map as $key => $mappedQuery) {
+            if (isset($this->get[$key])) {
+                $query = $mappedQuery;
+                $value = $this->get[$key] ?? $value;
+                break;
+            }
         }
 
-        return [$query, $value];
+        return [
+            $query,
+            $value,
+        ];
     }
 
     private function get_class_name(mixed $query): string
