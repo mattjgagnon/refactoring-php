@@ -35,7 +35,7 @@ final class Yatzy
     /**
      * @param array<int, int> $dice
      */
-    public static function yatzyScore(array $dice): int
+    public static function yatzy_score(array $dice): int
     {
         $counts = array_fill(0, count($dice) + 1, 0);
         foreach ($dice as $die) {
@@ -171,7 +171,7 @@ final class Yatzy
         return 0;
     }
 
-    public static function smallStraight(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function small_straight(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $tallies = array_fill(0, 6, 0);
         $tallies[$d1 - 1] += 1;
@@ -185,7 +185,7 @@ final class Yatzy
         return 0;
     }
 
-    public static function largeStraight(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function large_straight(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $tallies = array_fill(0, 6, 0);
         $tallies[$d1 - 1] += 1;
@@ -199,7 +199,7 @@ final class Yatzy
         return 0;
     }
 
-    public static function fullHouse(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function full_house(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $tallies = [];
         $_2 = FALSE;
@@ -247,7 +247,7 @@ final class Yatzy
         return $sum;
     }
 
-    public function Fives(): int
+    public function fives(): int
     {
         $s = 0;
         $i = 0;

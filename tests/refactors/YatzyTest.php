@@ -21,7 +21,7 @@ final class YatzyTest extends TestCase
     #[Test] public function yatzy_scores_50(): void
     {
         $expected = 50;
-        $actual = Yatzy::yatzyScore([
+        $actual = Yatzy::yatzy_score([
             4,
             4,
             4,
@@ -29,14 +29,14 @@ final class YatzyTest extends TestCase
             4,
         ]);
         self::assertSame($expected, $actual);
-        self::assertSame(50, Yatzy::yatzyScore([
+        self::assertSame(50, Yatzy::yatzy_score([
             6,
             6,
             6,
             6,
             6,
         ]));
-        self::assertSame(0, Yatzy::yatzyScore([
+        self::assertSame(0, Yatzy::yatzy_score([
             6,
             6,
             6,
@@ -76,9 +76,9 @@ final class YatzyTest extends TestCase
 
     #[Test] public function fives(): void
     {
-        self::assertSame(10, (new Yatzy(4, 4, 4, 5, 5))->Fives());
-        self::assertSame(15, (new Yatzy(4, 4, 5, 5, 5))->Fives());
-        self::assertSame(20, (new Yatzy(4, 5, 5, 5, 5))->Fives());
+        self::assertSame(10, (new Yatzy(4, 4, 4, 5, 5))->fives());
+        self::assertSame(15, (new Yatzy(4, 4, 5, 5, 5))->fives());
+        self::assertSame(20, (new Yatzy(4, 5, 5, 5, 5))->fives());
     }
 
     #[Test] public function sixes(): void
@@ -113,21 +113,21 @@ final class YatzyTest extends TestCase
 
     #[Test] public function small_straight(): void
     {
-        self::assertSame(15, Yatzy::smallStraight(1, 2, 3, 4, 5));
-        self::assertSame(15, Yatzy::smallStraight(2, 3, 4, 5, 1));
-        self::assertSame(0, Yatzy::smallStraight(1, 2, 2, 4, 5));
+        self::assertSame(15, Yatzy::small_straight(1, 2, 3, 4, 5));
+        self::assertSame(15, Yatzy::small_straight(2, 3, 4, 5, 1));
+        self::assertSame(0, Yatzy::small_straight(1, 2, 2, 4, 5));
     }
 
     #[Test] public function large_straight(): void
     {
-        self::assertSame(20, Yatzy::largeStraight(6, 2, 3, 4, 5));
-        self::assertSame(20, Yatzy::largeStraight(2, 3, 4, 5, 6));
-        self::assertSame(0, Yatzy::largeStraight(1, 2, 2, 4, 5));
+        self::assertSame(20, Yatzy::large_straight(6, 2, 3, 4, 5));
+        self::assertSame(20, Yatzy::large_straight(2, 3, 4, 5, 6));
+        self::assertSame(0, Yatzy::large_straight(1, 2, 2, 4, 5));
     }
 
     #[Test] public function full_house(): void
     {
-        self::assertSame(18, Yatzy::fullHouse(6, 2, 2, 2, 6));
-        self::assertSame(0, Yatzy::fullHouse(2, 3, 4, 5, 6));
+        self::assertSame(18, Yatzy::full_house(6, 2, 2, 2, 6));
+        self::assertSame(0, Yatzy::full_house(2, 3, 4, 5, 6));
     }
 }
