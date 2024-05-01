@@ -201,9 +201,7 @@ final class Yatzy
 
     public static function full_house(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
-        $tallies = [];
         $_2 = FALSE;
-        $i = 0;
         $_2_at = 0;
         $_3 = FALSE;
         $_3_at = 0;
@@ -250,7 +248,7 @@ final class Yatzy
     public function fives(): int
     {
         $s = 0;
-        $i = 0;
+
         for ($i = 0; $i < 5; $i++) {
             if ($this->dice[$i] == 5) {
                 $s = $s + 5;
