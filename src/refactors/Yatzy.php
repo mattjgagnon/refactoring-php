@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-class Yatzy
+final class Yatzy
 {
     /**
      * @var array<int, int>
      */
     private array $dice;
 
-    public function __construct(int $d1, int $d2, int $d3, int $d4, int $_5)
+    public function __construct(private readonly int $d1, private readonly int $d2, private readonly int $d3, private readonly int $d4, private readonly int $_5)
     {
         $this->dice = array_fill(0, 6, 0);
         $this->dice[0] = $d1;
