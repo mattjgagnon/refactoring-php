@@ -37,16 +37,26 @@ final class Yatzy
      */
     public static function yatzy_score(array $dice): int
     {
-        $counts = array_fill(0, count($dice) + 1, 0);
-        foreach ($dice as $die) {
-            $counts[$die - 1] += 1;
-        }
+        $counts = self::get_counts($dice);
+
         foreach (range(0, count($counts) - 1) as $i) {
             if ($counts[$i] == 5) {
                 return 50;
             }
         }
+
         return 0;
+    }
+
+    private static function get_counts(array $dice): array
+    {
+        $counts = array_fill(0, count($dice) + 1, 0);
+
+        foreach ($dice as $die) {
+            $counts[$die - 1] += 1;
+        }
+
+        return $counts;
     }
 
     public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): int
