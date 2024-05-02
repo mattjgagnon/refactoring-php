@@ -62,18 +62,23 @@ final class Yatzy
     public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $sum = 0;
+
         if ($d1 == 1) {
             $sum += 1;
         }
+
         if ($d2 == 1) {
             $sum += 1;
         }
+
         if ($d3 == 1) {
             $sum += 1;
         }
+
         if ($d4 == 1) {
             $sum += 1;
         }
+
         if ($d5 == 1) {
             $sum += 1;
         }
@@ -84,18 +89,23 @@ final class Yatzy
     public static function twos(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $sum = 0;
+
         if ($d1 == 2) {
             $sum += 2;
         }
+
         if ($d2 == 2) {
             $sum += 2;
         }
+
         if ($d3 == 2) {
             $sum += 2;
         }
+
         if ($d4 == 2) {
             $sum += 2;
         }
+
         if ($d5 == 2) {
             $sum += 2;
         }
@@ -106,18 +116,23 @@ final class Yatzy
     public static function threes(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $s = 0;
+
         if ($d1 == 3) {
             $s += 3;
         }
+
         if ($d2 == 3) {
             $s += 3;
         }
+
         if ($d3 == 3) {
             $s += 3;
         }
+
         if ($d4 == 3) {
             $s += 3;
         }
+
         if ($d5 == 3) {
             $s += 3;
         }
@@ -133,11 +148,13 @@ final class Yatzy
         $counts[$d3 - 1] += 1;
         $counts[$d4 - 1] += 1;
         $counts[$d5 - 1] += 1;
+
         for ($at = 0; $at != 6; $at++) {
             if ($counts[6 - $at - 1] == 2) {
                 return (6 - $at) * 2;
             }
         }
+
         return 0;
     }
 
@@ -151,6 +168,7 @@ final class Yatzy
         $counts[$d5 - 1] += 1;
         $n = 0;
         $score = 0;
+
         for ($i = 0; $i != 6; $i++) {
             if ($counts[6 - $i - 1] >= 2) {
                 $n = $n + 1;
@@ -173,11 +191,13 @@ final class Yatzy
         $t[$d3 - 1] += 1;
         $t[$d4 - 1] += 1;
         $t[$d5 - 1] += 1;
+
         for ($i = 0; $i != 6; $i++) {
             if ($t[$i] >= 3) {
                 return ($i + 1) * 3;
             }
         }
+
         return 0;
     }
 
@@ -189,9 +209,11 @@ final class Yatzy
         $tallies[$d3 - 1] += 1;
         $tallies[$d4 - 1] += 1;
         $tallies[$d5 - 1] += 1;
+
         if ($tallies[0] == 1 && $tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1) {
             return 15;
         }
+
         return 0;
     }
 
@@ -203,9 +225,11 @@ final class Yatzy
         $tallies[$d3 - 1] += 1;
         $tallies[$d4 - 1] += 1;
         $tallies[$d5 - 1] += 1;
+
         if ($tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1 && $tallies[5] == 1) {
             return 20;
         }
+
         return 0;
     }
 
@@ -247,11 +271,13 @@ final class Yatzy
     public function fours(): int
     {
         $sum = 0;
+
         for ($at = 0; $at != 5; $at++) {
             if ($this->dice[$at] == 4) {
                 $sum += 4;
             }
         }
+
         return $sum;
     }
 
@@ -264,17 +290,20 @@ final class Yatzy
                 $s = $s + 5;
             }
         }
+
         return $s;
     }
 
     public function sixes(): int
     {
         $sum = 0;
+
         for ($at = 0; $at < 5; $at++) {
             if ($this->dice[$at] == 6) {
                 $sum = $sum + 6;
             }
         }
+
         return $sum;
     }
 }
