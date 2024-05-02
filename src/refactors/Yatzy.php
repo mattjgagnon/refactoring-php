@@ -14,11 +14,11 @@ final class Yatzy
     public function __construct(private readonly int $d1, private readonly int $d2, private readonly int $d3, private readonly int $d4, private readonly int $d5)
     {
         $this->dice = array_fill(0, 6, 0);
-        $this->dice[0] = $d1;
-        $this->dice[1] = $d2;
-        $this->dice[2] = $d3;
-        $this->dice[3] = $d4;
-        $this->dice[4] = $d5;
+        $this->dice[0] = $this->d1;
+        $this->dice[1] = $this->d2;
+        $this->dice[2] = $this->d3;
+        $this->dice[3] = $this->d4;
+        $this->dice[4] = $this->d5;
     }
 
     public static function chance(int $d1, int $d2, int $d3, int $d4, int $d5): int
