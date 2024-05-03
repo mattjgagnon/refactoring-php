@@ -59,33 +59,6 @@ final class Yatzy
         return $counts;
     }
 
-    public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $sum = 0;
-
-        if ($d1 == 1) {
-            $sum += 1;
-        }
-
-        if ($d2 == 1) {
-            $sum += 1;
-        }
-
-        if ($d3 == 1) {
-            $sum += 1;
-        }
-
-        if ($d4 == 1) {
-            $sum += 1;
-        }
-
-        if ($d5 == 1) {
-            $sum += 1;
-        }
-
-        return $sum;
-    }
-
     public static function twos(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $sum = 0;
@@ -266,6 +239,19 @@ final class Yatzy
         } else {
             return 0;
         }
+    }
+
+    public function ones(): int
+    {
+        $sum = 0;
+
+        for ($at = 0; $at < 5; $at++) {
+            if ($this->dice[$at] == 1) {
+                $sum += 1;
+            }
+        }
+
+        return $sum;
     }
 
     public function fours(): int

@@ -47,11 +47,11 @@ final class YatzyTest extends TestCase
 
     #[Test] public function ones(): void
     {
-        self::assertSame(1, Yatzy::ones(1, 2, 3, 4, 5));
-        self::assertSame(2, Yatzy::ones(1, 1, 3, 4, 5));
-        self::assertSame(2, Yatzy::ones(1, 2, 1, 4, 5));
-        self::assertSame(0, Yatzy::ones(6, 2, 2, 4, 5));
-        self::assertSame(4, Yatzy::ones(1, 2, 1, 1, 1));
+        self::assertSame(1, (new Yatzy(1, 2, 3, 4, 5))->ones());
+        self::assertSame(2, (new Yatzy(1, 1, 3, 4, 5))->ones());
+        self::assertSame(2, (new Yatzy(1, 2, 1, 4, 5))->ones());
+        self::assertSame(0, (new Yatzy(6, 2, 2, 4, 5))->ones());
+        self::assertSame(4, (new Yatzy(1, 2, 1, 1, 1))->ones());
     }
 
     #[Test] public function twos(): void
