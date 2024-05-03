@@ -272,7 +272,7 @@ final class Yatzy
     {
         $sum = 0;
 
-        for ($at = 0; $at != 5; $at++) {
+        for ($at = 0; $at < 5; $at++) {
             if ($this->dice[$at] == 4) {
                 $sum += 4;
             }
@@ -300,7 +300,7 @@ final class Yatzy
 
         for ($at = 0; $at < 5; $at++) {
             if ($this->dice[$at] == 6) {
-                $sum = $sum + 6;
+                $sum += 6;
             }
         }
 
