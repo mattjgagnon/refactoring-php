@@ -285,9 +285,9 @@ final class Yatzy
     {
         $sum = 0;
 
-        for ($i = 0; $i < 5; $i++) {
-            if ($this->dice[$i] == 5) {
-                $sum = $sum + 5;
+        for ($at = 0; $at < 5; $at++) {
+            if ($this->dice[$at] == 5) {
+                $sum += 5;
             }
         }
 
