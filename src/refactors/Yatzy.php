@@ -21,31 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function two_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $counts = array_fill(0, 6, 0);
-        $counts[$d1 - 1] += 1;
-        $counts[$d2 - 1] += 1;
-        $counts[$d3 - 1] += 1;
-        $counts[$d4 - 1] += 1;
-        $counts[$d5 - 1] += 1;
-        $n = 0;
-        $score = 0;
-
-        for ($i = 0; $i != 6; $i++) {
-            if ($counts[6 - $i - 1] >= 2) {
-                $n += 1;
-                $score += (6 - $i);
-            }
-        }
-
-        if ($n == 2) {
-            return $score * 2;
-        }
-
-        return 0;
-    }
-
     public static function three_of_a_kind(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $t = array_fill(0, 6, 0);
@@ -126,6 +101,31 @@ final class Yatzy
 
         if ($_2 && $_3) {
             return $_2_at * 2 + $_3_at * 3;
+        }
+
+        return 0;
+    }
+
+    public function two_pair(): int
+    {
+        $counts = array_fill(0, 6, 0);
+        $counts[$this->d1 - 1] += 1;
+        $counts[$this->d2 - 1] += 1;
+        $counts[$this->d3 - 1] += 1;
+        $counts[$this->d4 - 1] += 1;
+        $counts[$this->d5 - 1] += 1;
+        $n = 0;
+        $score = 0;
+
+        for ($i = 0; $i != 6; $i++) {
+            if ($counts[6 - $i - 1] >= 2) {
+                $n += 1;
+                $score += (6 - $i);
+            }
+        }
+
+        if ($n == 2) {
+            return $score * 2;
         }
 
         return 0;
