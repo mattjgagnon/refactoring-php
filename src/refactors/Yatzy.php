@@ -21,33 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    /**
-     * @param array<int, int> $dice
-     */
-    public static function yatzy_score(array $dice): int
-    {
-        $counts = self::get_counts($dice);
-
-        foreach (range(0, count($counts) - 1) as $i) {
-            if ($counts[$i] == 5) {
-                return 50;
-            }
-        }
-
-        return 0;
-    }
-
-    private static function get_counts(array $dice): array
-    {
-        $counts = array_fill(0, count($dice) + 1, 0);
-
-        foreach ($dice as $die) {
-            $counts[$die - 1] += 1;
-        }
-
-        return $counts;
-    }
-
     public static function score_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $counts = array_fill(0, 6, 0);
@@ -174,6 +147,30 @@ final class Yatzy
         }
 
         return 0;
+    }
+
+    public function yatzy_score(): int
+    {
+        $counts = self::get_counts($this->dice);
+
+        foreach (range(0, count($counts) - 1) as $i) {
+            if ($counts[$i] == 5) {
+                return 50;
+            }
+        }
+
+        return 0;
+    }
+
+    private static function get_counts(array $dice): array
+    {
+        $counts = array_fill(0, count($dice) + 1, 0);
+
+        foreach ($dice as $die) {
+            $counts[$die - 1] += 1;
+        }
+
+        return $counts;
     }
 
     public function chance(): int

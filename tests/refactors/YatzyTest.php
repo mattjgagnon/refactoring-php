@@ -21,28 +21,10 @@ final class YatzyTest extends TestCase
     #[Test] public function yatzy_scores_50(): void
     {
         $expected = 50;
-        $actual = Yatzy::yatzy_score([
-            4,
-            4,
-            4,
-            4,
-            4,
-        ]);
+        $actual = (new Yatzy(4, 4, 4, 4, 4,))->yatzy_score();
         self::assertSame($expected, $actual);
-        self::assertSame(50, Yatzy::yatzy_score([
-            6,
-            6,
-            6,
-            6,
-            6,
-        ]));
-        self::assertSame(0, Yatzy::yatzy_score([
-            6,
-            6,
-            6,
-            6,
-            3,
-        ]));
+        self::assertSame(50, (new Yatzy(6, 6, 6, 6, 6,))->yatzy_score());
+        self::assertSame(0, (new Yatzy(6, 6, 6, 6, 3,))->yatzy_score());
     }
 
     #[Test] public function ones(): void
