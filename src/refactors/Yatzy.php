@@ -151,7 +151,7 @@ final class Yatzy
 
     public function yatzy_score(): int
     {
-        $counts = self::get_counts($this->dice);
+        $counts = $this->get_counts($this->dice);
 
         foreach (range(0, count($counts) - 1) as $i) {
             if ($counts[$i] == 5) {
@@ -162,7 +162,7 @@ final class Yatzy
         return 0;
     }
 
-    private static function get_counts(array $dice): array
+    private function get_counts(array $dice): array
     {
         $counts = array_fill(0, count($dice) + 1, 0);
 
