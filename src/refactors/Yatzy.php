@@ -90,16 +90,16 @@ final class Yatzy
 
         for ($i = 0; $i != 6; $i++) {
             if ($counts[6 - $i - 1] >= 2) {
-                $n = $n + 1;
+                $n += 1;
                 $score += (6 - $i);
             }
         }
 
         if ($n == 2) {
             return $score * 2;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     public static function three_of_a_kind(int $d1, int $d2, int $d3, int $d4, int $d5): int
@@ -182,9 +182,9 @@ final class Yatzy
 
         if ($_2 && $_3) {
             return $_2_at * 2 + $_3_at * 3;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     public function threes(): int
