@@ -59,33 +59,6 @@ final class Yatzy
         return $counts;
     }
 
-    public static function threes(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $s = 0;
-
-        if ($d1 == 3) {
-            $s += 3;
-        }
-
-        if ($d2 == 3) {
-            $s += 3;
-        }
-
-        if ($d3 == 3) {
-            $s += 3;
-        }
-
-        if ($d4 == 3) {
-            $s += 3;
-        }
-
-        if ($d5 == 3) {
-            $s += 3;
-        }
-
-        return $s;
-    }
-
     public static function score_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $counts = array_fill(0, 6, 0);
@@ -212,6 +185,19 @@ final class Yatzy
         } else {
             return 0;
         }
+    }
+
+    public function threes(): int
+    {
+        $sum = 0;
+
+        for ($at = 0; $at < 5; $at++) {
+            if ($this->dice[$at] == 3) {
+                $sum += 3;
+            }
+        }
+
+        return $sum;
     }
 
     public function twos(): int
