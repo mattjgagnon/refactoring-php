@@ -21,17 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function chance(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $total = 0;
-        $total += $d1;
-        $total += $d2;
-        $total += $d3;
-        $total += $d4;
-        $total += $d5;
-        return $total;
-    }
-
     /**
      * @param array<int, int> $dice
      */
@@ -185,6 +174,17 @@ final class Yatzy
         }
 
         return 0;
+    }
+
+    public function chance(): int
+    {
+        $total = 0;
+        $total += $this->d1;
+        $total += $this->d2;
+        $total += $this->d3;
+        $total += $this->d4;
+        $total += $this->d5;
+        return $total;
     }
 
     public function threes(): int
