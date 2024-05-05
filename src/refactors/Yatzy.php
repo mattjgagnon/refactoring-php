@@ -21,24 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function three_of_a_kind(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $t = array_fill(0, 6, 0);
-        $t[$d1 - 1] += 1;
-        $t[$d2 - 1] += 1;
-        $t[$d3 - 1] += 1;
-        $t[$d4 - 1] += 1;
-        $t[$d5 - 1] += 1;
-
-        for ($i = 0; $i != 6; $i++) {
-            if ($t[$i] >= 3) {
-                return ($i + 1) * 3;
-            }
-        }
-
-        return 0;
-    }
-
     public static function small_straight(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $tallies = array_fill(0, 6, 0);
@@ -101,6 +83,24 @@ final class Yatzy
 
         if ($_2 && $_3) {
             return $_2_at * 2 + $_3_at * 3;
+        }
+
+        return 0;
+    }
+
+    public function three_of_a_kind(): int
+    {
+        $t = array_fill(0, 6, 0);
+        $t[$this->d1 - 1] += 1;
+        $t[$this->d2 - 1] += 1;
+        $t[$this->d3 - 1] += 1;
+        $t[$this->d4 - 1] += 1;
+        $t[$this->d5 - 1] += 1;
+
+        for ($i = 0; $i != 6; $i++) {
+            if ($t[$i] >= 3) {
+                return ($i + 1) * 3;
+            }
         }
 
         return 0;
