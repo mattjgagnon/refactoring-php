@@ -21,24 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function score_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $counts = array_fill(0, 6, 0);
-        $counts[$d1 - 1] += 1;
-        $counts[$d2 - 1] += 1;
-        $counts[$d3 - 1] += 1;
-        $counts[$d4 - 1] += 1;
-        $counts[$d5 - 1] += 1;
-
-        for ($at = 0; $at != 6; $at++) {
-            if ($counts[6 - $at - 1] == 2) {
-                return (6 - $at) * 2;
-            }
-        }
-
-        return 0;
-    }
-
     public static function two_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $counts = array_fill(0, 6, 0);
@@ -144,6 +126,24 @@ final class Yatzy
 
         if ($_2 && $_3) {
             return $_2_at * 2 + $_3_at * 3;
+        }
+
+        return 0;
+    }
+
+    public function score_pair(): int
+    {
+        $counts = array_fill(0, 6, 0);
+        $counts[$this->d1 - 1] += 1;
+        $counts[$this->d2 - 1] += 1;
+        $counts[$this->d3 - 1] += 1;
+        $counts[$this->d4 - 1] += 1;
+        $counts[$this->d5 - 1] += 1;
+
+        for ($at = 0; $at != 6; $at++) {
+            if ($counts[6 - $at - 1] == 2) {
+                return (6 - $at) * 2;
+            }
         }
 
         return 0;
