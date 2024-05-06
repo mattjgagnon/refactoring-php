@@ -21,7 +21,7 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function full_house(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public function full_house(): int
     {
         $_2 = FALSE;
         $_2_at = 0;
@@ -29,11 +29,11 @@ final class Yatzy
         $_3_at = 0;
 
         $tallies = array_fill(0, 6, 0);
-        $tallies[$d1 - 1] += 1;
-        $tallies[$d2 - 1] += 1;
-        $tallies[$d3 - 1] += 1;
-        $tallies[$d4 - 1] += 1;
-        $tallies[$d5 - 1] += 1;
+        $tallies[$this->d1 - 1] += 1;
+        $tallies[$this->d2 - 1] += 1;
+        $tallies[$this->d3 - 1] += 1;
+        $tallies[$this->d4 - 1] += 1;
+        $tallies[$this->d5 - 1] += 1;
 
         foreach (range(0, 5) as $i) {
             if ($tallies[$i] == 2) {

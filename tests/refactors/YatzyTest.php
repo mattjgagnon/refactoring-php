@@ -109,7 +109,7 @@ final class YatzyTest extends TestCase
 
     #[Test] public function full_house(): void
     {
-        self::assertSame(18, Yatzy::full_house(6, 2, 2, 2, 6));
-        self::assertSame(0, Yatzy::full_house(2, 3, 4, 5, 6));
+        self::assertSame(18, (new Yatzy(6, 2, 2, 2, 6))->full_house());
+        self::assertSame(0, (new Yatzy(2, 3, 4, 5, 6))->full_house());
     }
 }
