@@ -21,22 +21,6 @@ final class Yatzy
         $this->dice[4] = $this->d5;
     }
 
-    public static function large_straight(int $d1, int $d2, int $d3, int $d4, int $d5): int
-    {
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$d1 - 1] += 1;
-        $tallies[$d2 - 1] += 1;
-        $tallies[$d3 - 1] += 1;
-        $tallies[$d4 - 1] += 1;
-        $tallies[$d5 - 1] += 1;
-
-        if ($tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1 && $tallies[5] == 1) {
-            return 20;
-        }
-
-        return 0;
-    }
-
     public static function full_house(int $d1, int $d2, int $d3, int $d4, int $d5): int
     {
         $_2 = FALSE;
@@ -67,6 +51,22 @@ final class Yatzy
 
         if ($_2 && $_3) {
             return $_2_at * 2 + $_3_at * 3;
+        }
+
+        return 0;
+    }
+
+    public function large_straight(): int
+    {
+        $tallies = array_fill(0, 6, 0);
+        $tallies[$this->d1 - 1] += 1;
+        $tallies[$this->d2 - 1] += 1;
+        $tallies[$this->d3 - 1] += 1;
+        $tallies[$this->d4 - 1] += 1;
+        $tallies[$this->d5 - 1] += 1;
+
+        if ($tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1 && $tallies[5] == 1) {
+            return 20;
         }
 
         return 0;
