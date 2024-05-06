@@ -16,6 +16,7 @@ final class YatzyTest extends TestCase
         $actual = (new Yatzy(2, 3, 4, 5, 1))->chance();
         self::assertSame($expected, $actual);
         self::assertSame(16, (new Yatzy(3, 3, 4, 5, 1))->chance());
+        self::assertSame(17, (new Yatzy(1, 2, 3, 5, 6))->chance());
     }
 
     #[Test] public function yatzy_scores_50(): void
@@ -40,6 +41,7 @@ final class YatzyTest extends TestCase
     {
         self::assertSame(4, (new Yatzy(1, 2, 3, 2, 6))->twos());
         self::assertSame(10, (new Yatzy(2, 2, 2, 2, 2))->twos());
+        self::assertSame(0, (new Yatzy(1, 5, 3, 6, 6))->twos());
     }
 
     #[Test] public function threes(): void
@@ -47,6 +49,7 @@ final class YatzyTest extends TestCase
         self::assertSame(6, (new Yatzy(1, 2, 3, 2, 3))->threes());
         self::assertSame(9, (new Yatzy(3, 2, 3, 2, 3))->threes());
         self::assertSame(12, (new Yatzy(2, 3, 3, 3, 3))->threes());
+        self::assertSame(0, (new Yatzy(1, 2, 5, 2, 6))->threes());
     }
 
     #[Test] public function fours(): void
@@ -54,6 +57,7 @@ final class YatzyTest extends TestCase
         self::assertSame(12, (new Yatzy(4, 4, 4, 5, 5))->fours());
         self::assertSame(8, (new Yatzy(4, 4, 5, 5, 5))->fours());
         self::assertSame(4, (new Yatzy(4, 5, 5, 5, 5))->fours());
+        self::assertSame(0, (new Yatzy(1, 5, 5, 5, 5))->fours());
     }
 
     #[Test] public function fives(): void
@@ -61,6 +65,7 @@ final class YatzyTest extends TestCase
         self::assertSame(10, (new Yatzy(4, 4, 4, 5, 5))->fives());
         self::assertSame(15, (new Yatzy(4, 4, 5, 5, 5))->fives());
         self::assertSame(20, (new Yatzy(4, 5, 5, 5, 5))->fives());
+        self::assertSame(0, (new Yatzy(4, 4, 4, 1, 2))->fives());
     }
 
     #[Test] public function sixes(): void
