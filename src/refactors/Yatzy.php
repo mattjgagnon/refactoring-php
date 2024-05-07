@@ -108,12 +108,7 @@ final class Yatzy
 
     public function two_pair(): int
     {
-        $counts = array_fill(0, 6, 0);
-        $counts[$this->d1 - 1] += 1;
-        $counts[$this->d2 - 1] += 1;
-        $counts[$this->d3 - 1] += 1;
-        $counts[$this->d4 - 1] += 1;
-        $counts[$this->d5 - 1] += 1;
+        $counts = $this->get_counts($this->dice);
         $n = 0;
         $score = 0;
 
@@ -131,6 +126,17 @@ final class Yatzy
         return 0;
     }
 
+    private function get_counts(array $dice): array
+    {
+        $counts = array_fill(0, count($dice) + 1, 0);
+
+        foreach ($dice as $die) {
+            $counts[$die - 1] += 1;
+        }
+
+        return $counts;
+    }
+
     public function score_pair(): int
     {
         $counts = $this->get_counts($this->dice);
@@ -142,17 +148,6 @@ final class Yatzy
         }
 
         return 0;
-    }
-
-    private function get_counts(array $dice): array
-    {
-        $counts = array_fill(0, count($dice) + 1, 0);
-
-        foreach ($dice as $die) {
-            $counts[$die - 1] += 1;
-        }
-
-        return $counts;
     }
 
     public function yatzy_score(): int
