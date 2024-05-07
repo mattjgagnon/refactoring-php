@@ -28,17 +28,17 @@ final class Yatzy
         $_3 = FALSE;
         $_3_at = 0;
 
-        $tallies = $this->get_counts($this->dice);
+        $counts = $this->get_counts($this->dice);
 
         foreach (range(0, 5) as $i) {
-            if ($tallies[$i] == 2) {
+            if ($counts[$i] == 2) {
                 $_2 = TRUE;
                 $_2_at = $i + 1;
             }
         }
 
         foreach (range(0, 5) as $i) {
-            if ($tallies[$i] == 3) {
+            if ($counts[$i] == 3) {
                 $_3 = TRUE;
                 $_3_at = $i + 1;
             }
@@ -64,9 +64,9 @@ final class Yatzy
 
     public function large_straight(): int
     {
-        $tallies = $this->get_counts($this->dice);
+        $counts = $this->get_counts($this->dice);
 
-        if ($tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1 && $tallies[5] == 1) {
+        if ($counts[1] == 1 && $counts[2] == 1 && $counts[3] == 1 && $counts[4] == 1 && $counts[5] == 1) {
             return 20;
         }
 
@@ -75,9 +75,9 @@ final class Yatzy
 
     public function small_straight(): int
     {
-        $tallies = $this->get_counts($this->dice);
+        $counts = $this->get_counts($this->dice);
 
-        if ($tallies[0] == 1 && $tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1) {
+        if ($counts[0] == 1 && $counts[1] == 1 && $counts[2] == 1 && $counts[3] == 1 && $counts[4] == 1) {
             return 15;
         }
 
@@ -86,10 +86,10 @@ final class Yatzy
 
     public function three_of_a_kind(): int
     {
-        $t = $this->get_counts($this->dice);
+        $counts = $this->get_counts($this->dice);
 
         for ($i = 0; $i != 6; $i++) {
-            if ($t[$i] >= 3) {
+            if ($counts[$i] >= 3) {
                 return ($i + 1) * 3;
             }
         }
