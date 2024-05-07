@@ -28,12 +28,7 @@ final class Yatzy
         $_3 = FALSE;
         $_3_at = 0;
 
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$this->d1 - 1] += 1;
-        $tallies[$this->d2 - 1] += 1;
-        $tallies[$this->d3 - 1] += 1;
-        $tallies[$this->d4 - 1] += 1;
-        $tallies[$this->d5 - 1] += 1;
+        $tallies = $this->get_counts($this->dice);
 
         foreach (range(0, 5) as $i) {
             if ($tallies[$i] == 2) {
@@ -56,14 +51,20 @@ final class Yatzy
         return 0;
     }
 
+    private function get_counts(array $dice): array
+    {
+        $counts = array_fill(0, count($dice) + 1, 0);
+
+        foreach ($dice as $die) {
+            $counts[$die - 1] += 1;
+        }
+
+        return $counts;
+    }
+
     public function large_straight(): int
     {
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$this->d1 - 1] += 1;
-        $tallies[$this->d2 - 1] += 1;
-        $tallies[$this->d3 - 1] += 1;
-        $tallies[$this->d4 - 1] += 1;
-        $tallies[$this->d5 - 1] += 1;
+        $tallies = $this->get_counts($this->dice);
 
         if ($tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1 && $tallies[5] == 1) {
             return 20;
@@ -74,12 +75,7 @@ final class Yatzy
 
     public function small_straight(): int
     {
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$this->d1 - 1] += 1;
-        $tallies[$this->d2 - 1] += 1;
-        $tallies[$this->d3 - 1] += 1;
-        $tallies[$this->d4 - 1] += 1;
-        $tallies[$this->d5 - 1] += 1;
+        $tallies = $this->get_counts($this->dice);
 
         if ($tallies[0] == 1 && $tallies[1] == 1 && $tallies[2] == 1 && $tallies[3] == 1 && $tallies[4] == 1) {
             return 15;
@@ -90,12 +86,7 @@ final class Yatzy
 
     public function three_of_a_kind(): int
     {
-        $t = array_fill(0, 6, 0);
-        $t[$this->d1 - 1] += 1;
-        $t[$this->d2 - 1] += 1;
-        $t[$this->d3 - 1] += 1;
-        $t[$this->d4 - 1] += 1;
-        $t[$this->d5 - 1] += 1;
+        $t = $this->get_counts($this->dice);
 
         for ($i = 0; $i != 6; $i++) {
             if ($t[$i] >= 3) {
@@ -124,17 +115,6 @@ final class Yatzy
         }
 
         return 0;
-    }
-
-    private function get_counts(array $dice): array
-    {
-        $counts = array_fill(0, count($dice) + 1, 0);
-
-        foreach ($dice as $die) {
-            $counts[$die - 1] += 1;
-        }
-
-        return $counts;
     }
 
     public function score_pair(): int
