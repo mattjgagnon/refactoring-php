@@ -133,29 +133,11 @@ final class Yatzy
 
     public function score_pair(): int
     {
-        $counts = array_fill(0, 6, 0);
-        $counts[$this->d1 - 1] += 1;
-        $counts[$this->d2 - 1] += 1;
-        $counts[$this->d3 - 1] += 1;
-        $counts[$this->d4 - 1] += 1;
-        $counts[$this->d5 - 1] += 1;
+        $counts = $this->get_counts($this->dice);
 
         for ($at = 0; $at != 6; $at++) {
             if ($counts[6 - $at - 1] == 2) {
                 return (6 - $at) * 2;
-            }
-        }
-
-        return 0;
-    }
-
-    public function yatzy_score(): int
-    {
-        $counts = $this->get_counts($this->dice);
-
-        foreach (range(0, count($counts) - 1) as $i) {
-            if ($counts[$i] == 5) {
-                return 50;
             }
         }
 
@@ -171,6 +153,19 @@ final class Yatzy
         }
 
         return $counts;
+    }
+
+    public function yatzy_score(): int
+    {
+        $counts = $this->get_counts($this->dice);
+
+        foreach (range(0, count($counts) - 1) as $i) {
+            if ($counts[$i] == 5) {
+                return 50;
+            }
+        }
+
+        return 0;
     }
 
     public function chance(): int
