@@ -184,40 +184,16 @@ final class Yatzy
 
     public function fours(): int
     {
-        $sum = 0;
-
-        for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === 4) {
-                $sum += 4;
-            }
-        }
-
-        return $sum;
+        return $this->get_sum_for_value(4);
     }
 
     public function fives(): int
     {
-        $sum = 0;
-
-        for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === 5) {
-                $sum += 5;
-            }
-        }
-
-        return $sum;
+        return $this->get_sum_for_value(5);
     }
 
     public function sixes(): int
     {
-        $sum = 0;
-
-        for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === 6) {
-                $sum += 6;
-            }
-        }
-
-        return $sum;
+        return $this->get_sum_for_value(6);
     }
 }
