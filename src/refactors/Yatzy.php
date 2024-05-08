@@ -156,11 +156,16 @@ final class Yatzy
 
     public function threes(): int
     {
+        return $this->get_sum_for_value(3);
+    }
+
+    private function get_sum_for_value(int $value): int
+    {
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === 3) {
-                $sum += 3;
+            if ($this->dice[$at] === $value) {
+                $sum += $value;
             }
         }
 
