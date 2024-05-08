@@ -179,15 +179,7 @@ final class Yatzy
 
     public function ones(): int
     {
-        $sum = 0;
-
-        for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === 1) {
-                $sum += 1;
-            }
-        }
-
-        return $sum;
+        return $this->get_sum_for_value(1);
     }
 
     public function fours(): int
