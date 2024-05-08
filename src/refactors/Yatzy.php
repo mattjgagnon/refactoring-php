@@ -31,14 +31,14 @@ final class Yatzy
         $counts = $this->get_counts($this->dice);
 
         foreach (range(0, 5) as $i) {
-            if ($counts[$i] == 2) {
+            if ($counts[$i] === 2) {
                 $_2 = TRUE;
                 $_2_at = $i + 1;
             }
         }
 
         foreach (range(0, 5) as $i) {
-            if ($counts[$i] == 3) {
+            if ($counts[$i] === 3) {
                 $_3 = TRUE;
                 $_3_at = $i + 1;
             }
@@ -66,7 +66,7 @@ final class Yatzy
     {
         $counts = $this->get_counts($this->dice);
 
-        if ($counts[1] == 1 && $counts[2] == 1 && $counts[3] == 1 && $counts[4] == 1 && $counts[5] == 1) {
+        if ($counts[1] === 1 && $counts[2] === 1 && $counts[3] === 1 && $counts[4] === 1 && $counts[5] === 1) {
             return 20;
         }
 
@@ -77,7 +77,7 @@ final class Yatzy
     {
         $counts = $this->get_counts($this->dice);
 
-        if ($counts[0] == 1 && $counts[1] == 1 && $counts[2] == 1 && $counts[3] == 1 && $counts[4] == 1) {
+        if ($counts[0] === 1 && $counts[1] === 1 && $counts[2] === 1 && $counts[3] === 1 && $counts[4] === 1) {
             return 15;
         }
 
@@ -88,7 +88,7 @@ final class Yatzy
     {
         $counts = $this->get_counts($this->dice);
 
-        for ($i = 0; $i != 6; $i++) {
+        for ($i = 0; $i !== 6; $i++) {
             if ($counts[$i] >= 3) {
                 return ($i + 1) * 3;
             }
@@ -103,14 +103,14 @@ final class Yatzy
         $n = 0;
         $score = 0;
 
-        for ($i = 0; $i != 6; $i++) {
+        for ($i = 0; $i !== 6; $i++) {
             if ($counts[6 - $i - 1] >= 2) {
                 $n += 1;
                 $score += (6 - $i);
             }
         }
 
-        if ($n == 2) {
+        if ($n === 2) {
             return $score * 2;
         }
 
@@ -121,8 +121,8 @@ final class Yatzy
     {
         $counts = $this->get_counts($this->dice);
 
-        for ($at = 0; $at != 6; $at++) {
-            if ($counts[6 - $at - 1] == 2) {
+        for ($at = 0; $at !== 6; $at++) {
+            if ($counts[6 - $at - 1] === 2) {
                 return (6 - $at) * 2;
             }
         }
@@ -135,7 +135,7 @@ final class Yatzy
         $counts = $this->get_counts($this->dice);
 
         foreach (range(0, count($counts) - 1) as $i) {
-            if ($counts[$i] == 5) {
+            if ($counts[$i] === 5) {
                 return 50;
             }
         }
@@ -159,7 +159,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 3) {
+            if ($this->dice[$at] === 3) {
                 $sum += 3;
             }
         }
@@ -172,7 +172,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 2) {
+            if ($this->dice[$at] === 2) {
                 $sum += 2;
             }
         }
@@ -185,7 +185,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 1) {
+            if ($this->dice[$at] === 1) {
                 $sum += 1;
             }
         }
@@ -198,7 +198,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 4) {
+            if ($this->dice[$at] === 4) {
                 $sum += 4;
             }
         }
@@ -211,7 +211,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 5) {
+            if ($this->dice[$at] === 5) {
                 $sum += 5;
             }
         }
@@ -224,7 +224,7 @@ final class Yatzy
         $sum = 0;
 
         for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] == 6) {
+            if ($this->dice[$at] === 6) {
                 $sum += 6;
             }
         }
