@@ -87,27 +87,29 @@ final class Yatzy
     public function three_of_a_kind(): int
     {
         $counts = $this->get_counts($this->dice);
+        $sum = 0;
 
         for ($i = 0; $i !== 6; $i++) {
             if ($counts[$i] >= 3) {
-                return ($i + 1) * 3;
+                $sum = ($i + 1) * 3;
             }
         }
 
-        return 0;
+        return $sum;
     }
 
     public function four_of_a_kind(): int
     {
         $counts = $this->get_counts($this->dice);
+        $sum = 0;
 
         for ($i = 0; $i !== 6; $i++) {
             if ($counts[$i] >= 4) {
-                return ($i + 1) * 4;
+                $sum = ($i + 1) * 4;
             }
         }
 
-        return 0;
+        return $sum;
     }
 
     public function two_pair(): int
