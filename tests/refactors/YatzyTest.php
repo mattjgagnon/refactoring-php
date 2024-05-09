@@ -98,6 +98,14 @@ final class YatzyTest extends TestCase
         self::assertSame(0, (new Yatzy(1, 2, 3, 4, 5))->three_of_a_kind());
     }
 
+    #[Test] public function four_of_a_kind(): void
+    {
+        self::assertSame(12, (new Yatzy(3, 3, 3, 3, 5))->four_of_a_kind());
+        self::assertSame(20, (new Yatzy(5, 3, 5, 5, 5))->four_of_a_kind());
+        self::assertSame(24, (new Yatzy(6, 6, 6, 2, 6))->four_of_a_kind());
+        self::assertSame(0, (new Yatzy(4, 4, 3, 4, 5))->four_of_a_kind());
+    }
+
     #[Test] public function small_straight(): void
     {
         self::assertSame(15, (new Yatzy(1, 2, 3, 4, 5))->small_straight());

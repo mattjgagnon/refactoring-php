@@ -97,6 +97,19 @@ final class Yatzy
         return 0;
     }
 
+    public function four_of_a_kind(): int
+    {
+        $counts = $this->get_counts($this->dice);
+
+        for ($i = 0; $i !== 6; $i++) {
+            if ($counts[$i] >= 4) {
+                return ($i + 1) * 4;
+            }
+        }
+
+        return 0;
+    }
+
     public function two_pair(): int
     {
         $counts = $this->get_counts($this->dice);
