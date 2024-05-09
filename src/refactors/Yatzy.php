@@ -176,8 +176,8 @@ final class Yatzy
     {
         $sum = 0;
 
-        for ($at = 0; $at < 5; $at++) {
-            if ($this->dice[$at] === $value) {
+        for ($pips = 0; $pips < 5; $pips++) {
+            if ($this->dice[$pips] === $value) {
                 $sum += $value;
             }
         }
