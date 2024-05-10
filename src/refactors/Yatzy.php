@@ -45,7 +45,7 @@ final class Yatzy
         }
 
         if ($this->is_full_house($_2, $_3)) {
-            return $_2_at * 2 + $_3_at * 3;
+            return $this->sum_full_house($_2_at, $_3_at);
         }
 
         return 0;
@@ -65,6 +65,11 @@ final class Yatzy
     private function is_full_house(bool $_2, bool $_3): bool
     {
         return $_2 && $_3;
+    }
+
+    private function sum_full_house(int $_2_at, int $_3_at): int
+    {
+        return $_2_at * 2 + $_3_at * 3;
     }
 
     public function large_straight(): int
