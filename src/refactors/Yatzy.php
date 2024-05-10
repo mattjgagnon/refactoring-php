@@ -28,7 +28,7 @@ final class Yatzy
         $_3 = FALSE;
         $_3_at = 0;
 
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
 
         foreach (range(0, 5) as $i) {
             if ($counts[$i] === 2) {
@@ -51,11 +51,11 @@ final class Yatzy
         return 0;
     }
 
-    private function get_counts(array $dice): array
+    private function get_counts(): array
     {
-        $counts = array_fill(0, count($dice) + 1, 0);
+        $counts = array_fill(0, count($this->dice) + 1, 0);
 
-        foreach ($dice as $die) {
+        foreach ($this->dice as $die) {
             $counts[$die - 1] += 1;
         }
 
@@ -64,7 +64,7 @@ final class Yatzy
 
     public function large_straight(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
 
         if ($counts[1] === 1 && $counts[2] === 1 && $counts[3] === 1 && $counts[4] === 1 && $counts[5] === 1) {
             return 20;
@@ -75,7 +75,7 @@ final class Yatzy
 
     public function small_straight(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
 
         if ($counts[0] === 1 && $counts[1] === 1 && $counts[2] === 1 && $counts[3] === 1 && $counts[4] === 1) {
             return 15;
@@ -86,7 +86,7 @@ final class Yatzy
 
     public function three_of_a_kind(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
         return $this->get_sum_for_kind(3, $counts);
     }
 
@@ -105,13 +105,13 @@ final class Yatzy
 
     public function four_of_a_kind(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
         return $this->get_sum_for_kind(4, $counts);
     }
 
     public function two_pair(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
         $n = 0;
         $score = 0;
 
@@ -131,7 +131,7 @@ final class Yatzy
 
     public function score_pair(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
 
         for ($at = 0; $at !== 6; $at++) {
             if ($counts[6 - $at - 1] === 2) {
@@ -144,7 +144,7 @@ final class Yatzy
 
     public function yatzy_score(): int
     {
-        $counts = $this->get_counts($this->dice);
+        $counts = $this->get_counts();
 
         foreach (range(0, count($counts) - 1) as $i) {
             if ($counts[$i] === 5) {
