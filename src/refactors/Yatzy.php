@@ -23,29 +23,20 @@ final class Yatzy
 
     public function full_house(): int
     {
-        $_2 = FALSE;
-        $_2_at = 0;
-        $_3 = FALSE;
-        $_3_at = 0;
-
         $counts = $this->get_counts();
 
-        foreach (range(0, 5) as $i) {
-            if ($counts[$i] === 2) {
-                $_2 = TRUE;
-                $_2_at = $i + 1;
-            }
-        }
+        [
+            $two_part,
+            $two_part_pips,
+        ] = $this->get_full_house_part(2, $counts);
 
-        foreach (range(0, 5) as $i) {
-            if ($counts[$i] === 3) {
-                $_3 = TRUE;
-                $_3_at = $i + 1;
-            }
-        }
+        [
+            $three_part,
+            $three_part_pips,
+        ] = $this->get_full_house_part(3, $counts);
 
-        if ($this->is_full_house($_2, $_3)) {
-            return $this->sum_full_house($_2_at, $_3_at);
+        if ($this->is_full_house($two_part, $three_part)) {
+            return $this->sum_full_house($two_part_pips, $three_part_pips);
         }
 
         return 0;
@@ -62,14 +53,32 @@ final class Yatzy
         return $counts;
     }
 
-    private function is_full_house(bool $_2, bool $_3): bool
+    private function get_full_house_part(int $part, array $counts): array
     {
-        return $_2 && $_3;
+        $is_part = FALSE;
+        $part_count = 0;
+
+        foreach (range(0, 5) as $i) {
+            if ($counts[$i] === $part) {
+                $is_part = TRUE;
+                $part_count = $i + 1;
+            }
+        }
+
+        return [
+            $is_part,
+            $part_count,
+        ];
     }
 
-    private function sum_full_house(int $_2_at, int $_3_at): int
+    private function is_full_house(bool $two_part, bool $three_part): bool
     {
-        return $_2_at * 2 + $_3_at * 3;
+        return $two_part && $three_part;
+    }
+
+    private function sum_full_house(int $two_part_pips, int $three_part_pips): int
+    {
+        return $two_part_pips * 2 + $three_part_pips * 3;
     }
 
     public function large_straight(): int
