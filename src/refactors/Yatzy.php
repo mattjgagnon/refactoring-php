@@ -204,9 +204,16 @@ final class Yatzy
         $sum = 0;
 
         for ($pips = 0; $pips < 5; $pips++) {
-            if ($this->dice[$pips] === $value) {
-                $sum += $value;
-            }
+            $sum = $this->sum_pips($pips, $value, $sum);
+        }
+
+        return $sum;
+    }
+
+    private function sum_pips(int $pips, mixed $value, int $sum): mixed
+    {
+        if ($this->dice[$pips] === $value) {
+            $sum += $value;
         }
 
         return $sum;
