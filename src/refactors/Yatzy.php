@@ -185,13 +185,7 @@ final class Yatzy
 
     public function chance(): int
     {
-        $total = 0;
-        $total += $this->d1;
-        $total += $this->d2;
-        $total += $this->d3;
-        $total += $this->d4;
-        $total += $this->d5;
-        return $total;
+        return $this->d1 + $this->d2 + $this->d3 + $this->d4 + $this->d5;
     }
 
     public function threes(): int
