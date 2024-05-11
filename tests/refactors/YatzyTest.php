@@ -118,6 +118,7 @@ final class YatzyTest extends TestCase
         self::assertSame(20, (new Yatzy(6, 2, 3, 4, 5))->large_straight());
         self::assertSame(20, (new Yatzy(2, 3, 4, 5, 6))->large_straight());
         self::assertSame(0, (new Yatzy(1, 2, 2, 4, 5))->large_straight());
+        self::assertSame(20, (new Yatzy(1, 2, 3, 4, 5))->large_straight());
     }
 
     #[Test] public function full_house(): void

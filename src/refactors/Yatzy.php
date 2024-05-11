@@ -85,11 +85,13 @@ final class Yatzy
     {
         $counts = $this->get_counts();
 
-        if ($counts[1] === 1 && $counts[2] === 1 && $counts[3] === 1 && $counts[4] === 1 && $counts[5] === 1) {
-            return 20;
+        foreach ($counts as $value) {
+            if ($value > 1) {
+                return 0;
+            }
         }
 
-        return 0;
+        return 20;
     }
 
     public function small_straight(): int
