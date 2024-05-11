@@ -114,9 +114,16 @@ final class Yatzy
         $sum = 0;
 
         for ($i = 0; $i !== 6; $i++) {
-            if ($counts[$i] >= $kind) {
-                $sum = ($i + 1) * $kind;
-            }
+            $sum = $this->sum_kinds($counts[$i], $i, $kind, $sum);
+        }
+
+        return $sum;
+    }
+
+    private function sum_kinds($counts, int $i, int $kind, int $sum): int
+    {
+        if ($counts >= $kind) {
+            $sum = ($i + 1) * $kind;
         }
 
         return $sum;
