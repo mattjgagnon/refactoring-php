@@ -102,7 +102,7 @@ final class Yatzy
             return 15;
         }
 
-        if ($counts[2] >= 1 && $counts[3] === 1 && $counts[4] === 1 && $counts[5] === 1) {
+        if ($counts[2] >= 1 && $counts[3] >= 1 && $counts[4] >= 1 && $counts[5] >= 1) {
             return 15;
         }
 
