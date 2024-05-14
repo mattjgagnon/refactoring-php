@@ -141,26 +141,6 @@ final class Yatzy
         return $this->get_sum_for_kind(4, $counts);
     }
 
-    public function two_pair(): int
-    {
-        $counts = $this->get_counts();
-        $n = 0;
-        $score = 0;
-
-        for ($i = 0; $i !== 6; $i++) {
-            if ($counts[6 - $i - 1] >= 2) {
-                $n += 1;
-                $score += (6 - $i);
-            }
-        }
-
-        if ($n === 2) {
-            return $score * 2;
-        }
-
-        return 0;
-    }
-
     public function yatzy_score(): int
     {
         $counts = $this->get_counts();
