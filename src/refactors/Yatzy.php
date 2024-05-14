@@ -161,19 +161,6 @@ final class Yatzy
         return 0;
     }
 
-    public function score_pair(): int
-    {
-        $counts = $this->get_counts();
-
-        for ($at = 0; $at !== 6; $at++) {
-            if ($counts[6 - $at - 1] === 2) {
-                return (6 - $at) * 2;
-            }
-        }
-
-        return 0;
-    }
-
     public function yatzy_score(): int
     {
         $counts = $this->get_counts();
