@@ -141,7 +141,7 @@ final class Yatzy
         return $this->get_sum_for_kind(4, $counts);
     }
 
-    public function yatzy_score(): int
+    public function yatzy(): int
     {
         $counts = $this->get_counts();
 
