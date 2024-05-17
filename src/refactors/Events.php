@@ -1,8 +1,9 @@
 <?php
 
-class Events
-{
+namespace mattjgagnon\RefactoringPhp\refactors;
 
+final class Events
+{
     public static function events_insert()
     {
         global $Translation;
