@@ -2,28 +2,27 @@
 
 namespace refactors;
 
-use mattjgagnon\RefactoringPhp\refactors\Events;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class EventsTest extends TestCase
+final class EventsTest extends TestCase
 {
-
-    public function testEvents_delete()
+    #[Test] public function it_can_delete_events()
     {
 
     }
 
-    public function testEvents_update()
+    #[Test] public function it_can_update_events()
     {
 
     }
 
-    public function testEvents_insert()
+    #[Test] public function it_can_insert_events()
     {
 
     }
 
-    public function testEvents_form()
+    #[Test] public function it_generates_an_editable_events_form()
     {
 
     }
