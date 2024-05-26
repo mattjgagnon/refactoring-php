@@ -2,9 +2,9 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
-final class Events
+final class Event
 {
-    public static function events_insert()
+    public function events_insert()
     {
         global $Translation;
 
@@ -91,7 +91,7 @@ final class Events
         return $recID;
     }
 
-    public static function events_delete($selected_id, $AllowDeleteOfParents = FALSE, $skipChecks = FALSE)
+    public function events_delete($selected_id, $AllowDeleteOfParents = FALSE, $skipChecks = FALSE)
     {
         // insure referential integrity ...
         global $Translation;
@@ -127,7 +127,7 @@ final class Events
         sql("delete from membership_userrecords where tableName='events' and pkValue='$selected_id'", $eo);
     }
 
-    public static function events_update($selected_id)
+    public function events_update($selected_id)
     {
         global $Translation;
 
@@ -214,7 +214,7 @@ final class Events
 
     }
 
-    public static function events_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $AllowDelete = 1, $ShowCancel = 0, $TemplateDV = '', $TemplateDVP = '')
+    public function events_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $AllowDelete = 1, $ShowCancel = 0, $TemplateDV = '', $TemplateDVP = '')
     {
         // function to return an editable form for a table records
         // and fill it with data of record whose ID is $selected_id. If $selected_id
