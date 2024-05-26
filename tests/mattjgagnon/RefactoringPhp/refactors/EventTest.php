@@ -29,6 +29,24 @@ final class EventTest extends TestCase
         $this->assertFalse($result);
     }
 
+    #[Test] public function calling_insert_events_with_empty_status_returns_alert_link()
+    {
+        // assemble
+        $_GET['arr_perm'] = [
+            0 => [],
+            1 => ['permissions'],
+        ];
+        $event = new Event();
+
+        // act
+        $result = $event->events_insert();
+
+        // assert
+        $this->assertIsString($result);
+        $this->assertStringContainsString('alert', $result);
+        $this->assertStringContainsString('a href', $result);
+    }
+
     #[Test] public function it_generates_an_editable_events_form()
     {
 
@@ -37,5 +55,5 @@ final class EventTest extends TestCase
 
 function getTablePermissions(string $string): array
 {
-    return [];
+    return $_GET['arr_perm'] ?? [];
 }

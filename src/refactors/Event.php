@@ -6,6 +6,8 @@ require_once __DIR__ . '/events_functions.php';
 
 final class Event
 {
+    private const empty_lookup_value = '';
+
     public function events_insert()
     {
         global $Translation;
@@ -17,40 +19,40 @@ final class Event
         }
 
         $data['title'] = makeSafe($_REQUEST['title']);
-        if ($data['title'] == empty_lookup_value) {
+        if ($data['title'] == self::empty_lookup_value) {
             $data['title'] = '';
         }
         $data['date'] = intval($_REQUEST['dateYear']) . '-' . intval($_REQUEST['dateMonth']) . '-' . intval($_REQUEST['dateDay']);
         $data['date'] = parseMySQLDate($data['date'], '');
         $data['status'] = makeSafe($_REQUEST['status']);
-        if ($data['status'] == empty_lookup_value) {
+        if ($data['status'] == self::empty_lookup_value) {
             $data['status'] = '';
         }
         $data['name_patient'] = makeSafe($_REQUEST['name_patient']);
-        if ($data['name_patient'] == empty_lookup_value) {
+        if ($data['name_patient'] == self::empty_lookup_value) {
             $data['name_patient'] = '';
         }
         $data['time'] = makeSafe($_REQUEST['time']);
-        if ($data['time'] == empty_lookup_value) {
+        if ($data['time'] == self::empty_lookup_value) {
             $data['time'] = '';
         }
         $data['time'] = time24($data['time']);
         $data['prescription'] = makeSafe($_REQUEST['prescription']);
-        if ($data['prescription'] == empty_lookup_value) {
+        if ($data['prescription'] == self::empty_lookup_value) {
             $data['prescription'] = '';
         }
         $data['diagnosis'] = makeSafe($_REQUEST['diagnosis']);
-        if ($data['diagnosis'] == empty_lookup_value) {
+        if ($data['diagnosis'] == self::empty_lookup_value) {
             $data['diagnosis'] = '';
         }
         $data['comments'] = makeSafe($_REQUEST['comments']);
-        if ($data['comments'] == empty_lookup_value) {
+        if ($data['comments'] == self::empty_lookup_value) {
             $data['comments'] = '';
         }
         if ($data['status'] == '') {
-            echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
-            echo '<a href="" onclick="history.go(-1); return false;">' . $Translation['< back'] . '</a></div>';
-            exit;
+            $echo = StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
+            $echo .= '<a href="" onclick="history.go(-1); return false;">' . $Translation['< back'] . '</a></div>';
+            return $echo;
         }
         if ($data['time'] == '') {
             $data['time'] = "12:00";
