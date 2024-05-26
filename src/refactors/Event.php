@@ -2,6 +2,8 @@
 
 namespace mattjgagnon\RefactoringPhp\refactors;
 
+require_once __DIR__ . '/events_functions.php';
+
 final class Event
 {
     public function events_insert()
